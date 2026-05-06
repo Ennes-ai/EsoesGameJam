@@ -1,0 +1,23 @@
+:root {
+}
+
+.button {
+    width: 33%;
+    height: 15%;
+    background-size: 100% 97%;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background-color: rgb(178, 170, 170);
+    -unity-font-style: bold;
+    font-size: 20px;
+}
