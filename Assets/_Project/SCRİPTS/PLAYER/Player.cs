@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
@@ -9,6 +10,8 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 movement;
     private PlayerEnvanter playerEnvanter;
+    private bool IsInPortal = false;
+    private string portalName;
 
     void Start()
     {
@@ -29,11 +32,48 @@ public class Player : MonoBehaviour
         {
             playerEnvanter.UseTheItem();
         }
+        if (IsInPortal && Input.GetKeyDown(KeyCode.E))
+        {
+            // Portala girdiğinde E tuşuna basılırsa sahne geçişi yap
+            LoadTheLevel(levelName : portalName);
+        }
     }
 
     void FixedUpdate()
     {
         // Fizik tabanlı hareketi burada uyguluyoruz
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) 
+    {
+          if (other.gameObject.CompareTag("Portal"))
+        {
+            IsInPortal = true;
+            Portals portalData = other.gameObject.GetComponent<Portals>();
+            if (portalData != null)
+            {
+                portalName = portalData.LoadingPortalName;
+
+                Debug.Log("Portala girdi: " + portalName);
+
+                
+                // Burada sahne geçişi veya diğer işlemleri yapabilirsiniz
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other) 
+    {
+        if (other.gameObject.CompareTag("Portal"))
+        {
+            IsInPortal = false;
+            Debug.Log("Portaldan çıktı");
+        }
+    }
+
+    private void LoadTheLevel(string levelName)
+    {
+        SceneManager.LoadScene(levelName);
     }
 }
