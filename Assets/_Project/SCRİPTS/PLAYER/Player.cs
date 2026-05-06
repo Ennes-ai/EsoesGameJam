@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -9,6 +10,8 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 movement;
     private PlayerEnvanter playerEnvanter;
+
+    public bool IsCanGoLobby = false;
 
     void Start()
     {
