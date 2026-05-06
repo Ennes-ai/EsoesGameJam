@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +13,8 @@ public class Player : MonoBehaviour
     private PlayerEnvanter playerEnvanter;
     private bool IsInPortal = false;
     private string portalName;
+
+    public bool IsCanGoLobby = false;
 
     void Start()
     {
