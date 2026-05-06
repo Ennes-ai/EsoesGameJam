@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
 
     public bool IsCanGoLobby = false;
 
+    public bool CanGoSampleScene  = true , CanGoLevel_2 = false , CanGoLevel_3 = false, CanGoLevel_4 = false ;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -46,7 +48,42 @@ public class Player : MonoBehaviour
                     Debug.Log("Lobiye dönmek için henüz iznin yok!");
                     return;
                 }
-                LoadTheLevel(levelName : portalName);
+                else if (portalName == "Lobby" && IsCanGoLobby)
+                {
+                    LoadTheLevel(levelName : portalName);
+                }else if (portalName == "SampleScene" && !CanGoSampleScene)
+                {
+                    Debug.Log("SampleScene'e geçmek için henüz iznin yok!");
+                    return;
+                }
+                else if (portalName == "SampleScene" && CanGoSampleScene)
+                {
+                    LoadTheLevel(levelName : portalName);
+                }else if (portalName == "Level_2" && !CanGoLevel_2)
+                {
+                    Debug.Log("Level_2'ye geçmek için henüz iznin yok!");
+                    return;
+                }
+                else if (portalName == "Level_2" && CanGoLevel_2)
+                {
+                    LoadTheLevel(levelName : portalName);
+                }else if (portalName == "Level_3" && !CanGoLevel_3)
+                {
+                    Debug.Log("Level_3'e geçmek için henüz iznin yok!");
+                    return; 
+                }
+                else if (portalName == "Level_3" && CanGoLevel_3)
+                {
+                    LoadTheLevel(levelName : portalName);
+                }else if (portalName == "Level_4" && !CanGoLevel_4)
+                {
+                    Debug.Log("Level_4'e geçmek için henüz iznin yok!");
+                    return;
+                }
+                else if (portalName == "Level_4" && CanGoLevel_4)
+                {
+                    LoadTheLevel(levelName : portalName);
+                }
             }
         }
 
