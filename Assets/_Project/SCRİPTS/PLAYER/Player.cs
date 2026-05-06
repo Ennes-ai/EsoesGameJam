@@ -21,14 +21,18 @@ public class Player : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        
+        // Kamera takibindeki titremeyi (jitter) önlemek için fiziği render ile senkronize ediyoruz
+        rb.interpolation = RigidbodyInterpolation2D.Interpolate;
+        
         playerEnvanter = GetComponent<PlayerEnvanter>();
     }
 
     void Update()
     {
         // Klavye veya gamepad girdilerini alıyoruz (Keskin dönüşler için GetAxisRaw)
-        movement.x = Input.GetAxis("Horizontal");
-        movement.y = Input.GetAxis("Vertical");
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
 
         // Çapraz giderken hızlanmayı önlemek için vektörü normalize ediyoruz
         movement = movement.normalized;
@@ -43,6 +47,7 @@ public class Player : MonoBehaviour
             if (SceneManager.GetActiveScene().name != portalName) // Aynı sahneye geçiş yapmayı önlemek için
             {
                 // Hedef portal 'Lobby' ise ve iznimiz yoksa geçişi engelle
+                #region Sahne Geçiş Kontrolleri
                 if (portalName == "Lobby" && !IsCanGoLobby)
                 {
                     Debug.Log("Lobiye dönmek için henüz iznin yok!");
@@ -84,6 +89,7 @@ public class Player : MonoBehaviour
                 {
                     LoadTheLevel(levelName : portalName);
                 }
+                #endregion
             }
         }
 
@@ -112,7 +118,7 @@ public class Player : MonoBehaviour
                 Debug.Log("Portala girdi: " + portalName);
 
                 
-                // Burada sahne geçişi veya diğer işlemleri yapabilirsiniz
+              
             }
         }
     }
