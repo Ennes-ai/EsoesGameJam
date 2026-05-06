@@ -38,7 +38,21 @@ public class Player : MonoBehaviour
         if (IsInPortal && Input.GetKeyDown(KeyCode.E))
         {
             // Portala girdiğinde E tuşuna basılırsa sahne geçişi yap
-            LoadTheLevel(levelName : portalName);
+            if (SceneManager.GetActiveScene().name != portalName) // Aynı sahneye geçiş yapmayı önlemek için
+            {
+                // Hedef portal 'Lobby' ise ve iznimiz yoksa geçişi engelle
+                if (portalName == "Lobby" && !IsCanGoLobby)
+                {
+                    Debug.Log("Lobiye dönmek için henüz iznin yok!");
+                    return;
+                }
+                LoadTheLevel(levelName : portalName);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            IsCanGoLobby = true;
         }
     }
 

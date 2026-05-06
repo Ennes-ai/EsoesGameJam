@@ -210,6 +210,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &853885552
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3610940031327709747, guid: 8542af5d685043646a8cdb3fe69d9050, type: 3}
+      propertyPath: m_Name
+      value: PLAYER
+      objectReference: {fileID: 0}
+    - target: {fileID: 4140029879453024099, guid: 8542af5d685043646a8cdb3fe69d9050, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.20843601
+      objectReference: {fileID: 0}
+    - target: {fileID: 4140029879453024099, guid: 8542af5d685043646a8cdb3fe69d9050, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4.9823885
+      objectReference: {fileID: 0}
+    - target: {fileID: 4140029879453024099, guid: 8542af5d685043646a8cdb3fe69d9050, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4140029879453024099, guid: 8542af5d685043646a8cdb3fe69d9050, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4140029879453024099, guid: 8542af5d685043646a8cdb3fe69d9050, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4140029879453024099, guid: 8542af5d685043646a8cdb3fe69d9050, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4140029879453024099, guid: 8542af5d685043646a8cdb3fe69d9050, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4140029879453024099, guid: 8542af5d685043646a8cdb3fe69d9050, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4140029879453024099, guid: 8542af5d685043646a8cdb3fe69d9050, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4140029879453024099, guid: 8542af5d685043646a8cdb3fe69d9050, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8542af5d685043646a8cdb3fe69d9050, type: 3}
 --- !u!1 &1022109867
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,6 +278,7 @@ GameObject:
   - component: {fileID: 1022109870}
   - component: {fileID: 1022109869}
   - component: {fileID: 1022109868}
+  - component: {fileID: 1022109871}
   m_Layer: 0
   m_Name: Portal_4
   m_TagString: Portal
@@ -338,6 +396,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1022109871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1022109867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c1270bb53b0e349ac7575b5b3475e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Portals
+  LoadingPortalName: Level_4
 --- !u!1 &1182854662
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,6 +420,7 @@ GameObject:
   - component: {fileID: 1182854665}
   - component: {fileID: 1182854664}
   - component: {fileID: 1182854663}
+  - component: {fileID: 1182854666}
   m_Layer: 0
   m_Name: Portal_2
   m_TagString: Portal
@@ -466,6 +538,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1182854666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1182854662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c1270bb53b0e349ac7575b5b3475e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Portals
+  LoadingPortalName: Level_2
 --- !u!1 &1335787073
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,6 +654,7 @@ GameObject:
   - component: {fileID: 2007895776}
   - component: {fileID: 2007895775}
   - component: {fileID: 2007895774}
+  - component: {fileID: 2007895777}
   m_Layer: 0
   m_Name: Portal_3
   m_TagString: Portal
@@ -686,6 +772,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2007895777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007895773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c1270bb53b0e349ac7575b5b3475e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Portals
+  LoadingPortalName: Level_3
 --- !u!212 &3107217379598094210
 SpriteRenderer:
   serializedVersion: 2
@@ -807,6 +906,7 @@ GameObject:
   - component: {fileID: 5147273175477776712}
   - component: {fileID: 3107217379598094210}
   - component: {fileID: 7588340409547754174}
+  - component: {fileID: 8430293446818671801}
   m_Layer: 0
   m_Name: Portal_1
   m_TagString: Portal
@@ -814,6 +914,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8430293446818671801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8430293446818671800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c1270bb53b0e349ac7575b5b3475e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Portals
+  LoadingPortalName: SampleScene
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -824,3 +937,4 @@ SceneRoots:
   - {fileID: 1182854665}
   - {fileID: 2007895776}
   - {fileID: 1022109870}
+  - {fileID: 853885552}
