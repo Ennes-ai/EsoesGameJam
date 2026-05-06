@@ -25,8 +25,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         // Klavye veya gamepad girdilerini alıyoruz (Keskin dönüşler için GetAxisRaw)
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+        movement.x = Input.GetAxis("Horizontal");
+        movement.y = Input.GetAxis("Vertical");
 
         // Çapraz giderken hızlanmayı önlemek için vektörü normalize ediyoruz
         movement = movement.normalized;
