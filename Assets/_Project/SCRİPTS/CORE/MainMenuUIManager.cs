@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
@@ -8,9 +9,13 @@ public class MainMenuUIManager : MonoBehaviour
     private UIDocument _uiDocument;
     private Button _playButton;
     private Button _exitButton;
+    private VisualElement _fadeOverlay;
 
     private void OnEnable()
     {
+        // Önceki sahneden oyun durdurulmuş (Pause) olarak dönüldüyse zamanı normale alıyoruz.
+        Time.timeScale = 1f;
+
         _uiDocument = GetComponent<UIDocument>();
         var root = _uiDocument.rootVisualElement;
 
@@ -18,6 +23,9 @@ public class MainMenuUIManager : MonoBehaviour
         // Şimdilik "PlayButton" ve "ExitButton" olarak farz ediyorum.
         _playButton = root.Q<Button>("Play");
         _exitButton = root.Q<Button>("Exit");
+
+        // Siyah kararma ekranını buluyoruz
+        _fadeOverlay = root.Q<VisualElement>("FadeOverlay");
 
         // Butonlar bulunduysa Click (Tıklama) eventlerini bağlıyoruz
         if (_playButton != null) _playButton.clicked += OnPlayButtonClicked;
@@ -36,9 +44,56 @@ public class MainMenuUIManager : MonoBehaviour
 
     private void OnPlayButtonClicked()
     {
-        Debug.Log("Oyna butonuna tıklandı, Sahne(0) yükleniyor...");
-        // İndex'i 0 olan sahneyi yükler. (File -> Build Settings içindeki sahne sıralamasına göre)
-        SceneManager.LoadScene(0);
+        Debug.Log("Oyna butonuna tıklandı, ekran kararıyor...");
+        
+        if (_fadeOverlay != null)
+        {
+            // Ekranı karartan CSS class'ını aktif ediyoruz
+            _fadeOverlay.AddToClassList("fade-overlay--active");
+            // Sahneyi yüklemeden önce animasyonun bitmesini bekleyen Coroutine'i başlatıyoruz
+            StartCoroutine(LoadSceneAfterFade());
+        }
+        else
+        {
+            // Hata durumunda direkt yükle (Fail-safe)
+            Debug.Log("Hata var");
+            //SceneManager.LoadScene(0);
+        }
+    }
+
+    private IEnumerator LoadSceneAfterFade()
+    {
+        // 1. UI Toolkit'e kararma animasyonunu başlatması için 1 kare (frame) izin veriyoruz.
+        // Aksi takdirde asenkron yükleme ana iş parçacığını dondurup animasyonu bozabilir.
+        yield return null;
+
+        // 2. Sahneyi arka planda asenkron olarak yüklemeye başla
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(0);
+        Debug.Log("Asenkron");
+        if (asyncLoad != null)
+        {
+            // Sahne arkada yüklense bile biz izin verene kadar geçiş yapmasını engelle
+            asyncLoad.allowSceneActivation = false;
+        }
+        else
+        {
+            Debug.LogError("Sahne Index 0 bulunamadı! File -> Build Settings menüsünden sahneleri eklediğine emin ol.");
+        }
+
+        // 3. Zaman durdurulmuş olsa bile animasyon süresi kadar beklemesi için Realtime kullanıyoruz.
+        yield return new WaitForSecondsRealtime(1f);
+        
+        if (asyncLoad != null)
+        {
+            // 4. Eğer sahne çok büyükse ve 1 saniyede yüklenmesi bitmediyse, bitene kadar bekle
+            while (asyncLoad.progress < 0.9f)
+            {
+                yield return null;
+            }
+
+            // 5. Ekran tamamen karardı ve sahne hazır, artık geçişe izin ver!
+            asyncLoad.allowSceneActivation = true;
+        }
     }
 
     private void OnExitButtonClicked()
