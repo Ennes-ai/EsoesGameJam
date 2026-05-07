@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: StoneType
   m_EditorClassIdentifier: Assembly-CSharp::ItemType
   category: 1
-  itemSprite: {fileID: 7482667652216324306, guid: ced0763c8fddb7751b9d1795c88494ee, type: 3}
+  itemSprite: {fileID: 2820131925045074649, guid: 63757f04ee4ea9cb0b4fdfbd77ab28cd, type: 3}
   itemTag: Environment
   canBePickedUp: 1
   isPassable: 0

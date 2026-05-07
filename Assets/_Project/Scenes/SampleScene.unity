@@ -149,6 +149,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 556582249}
+  - {fileID: 865094441}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &403759712 stripped
@@ -381,6 +382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TransformableBlock
   isTransformed: 0
   isGuard: 0
+  currentItemType: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,7 +518,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 382684734}
+  m_Father: {fileID: 571167843}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &522449462
 GameObject:
@@ -568,6 +570,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TransformableBlock
   isTransformed: 0
   isGuard: 0
+  currentItemType: {fileID: 0}
 --- !u!114 &522449465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -580,7 +583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c299a386a58c742a29884d0a780630, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CollectibleItem
-  itemType: {fileID: 11400000, guid: c0d6bc83dcf14eeecb4c439b416f9ba4, type: 2}
+  itemType: {fileID: 11400000, guid: 5e4c749e49279683184746286f9de7c4, type: 2}
   IsCollectible: 1
 --- !u!61 &522449466
 BoxCollider2D:
@@ -918,6 +921,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TransformableBlock
   isTransformed: 0
   isGuard: 0
+  currentItemType: {fileID: 0}
 --- !u!114 &594419604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -930,7 +934,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c299a386a58c742a29884d0a780630, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CollectibleItem
-  itemType: {fileID: 11400000, guid: c0d6bc83dcf14eeecb4c439b416f9ba4, type: 2}
+  itemType: {fileID: 11400000, guid: 5e4c749e49279683184746286f9de7c4, type: 2}
   IsCollectible: 1
 --- !u!61 &594419605
 BoxCollider2D:
@@ -1242,6 +1246,50 @@ Transform:
   - {fileID: 1748429732}
   m_Father: {fileID: 578652718}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &865094440
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 865094441}
+  - component: {fileID: 865094442}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &865094441
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865094440}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 285346470}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &865094442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865094440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8ca30ad806bf57a582dbf35ae27703d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GlobalTransformationManager
 --- !u!4 &870816731 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1948265773564865766, guid: 8da4363de92076b10ab9d8a68bad8317, type: 3}
@@ -1297,6 +1345,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TransformableBlock
   isTransformed: 0
   isGuard: 0
+  currentItemType: {fileID: 0}
 --- !u!114 &1006026827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1309,7 +1358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c299a386a58c742a29884d0a780630, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CollectibleItem
-  itemType: {fileID: 11400000, guid: c0d6bc83dcf14eeecb4c439b416f9ba4, type: 2}
+  itemType: {fileID: 11400000, guid: 5e4c749e49279683184746286f9de7c4, type: 2}
   IsCollectible: 1
 --- !u!61 &1006026828
 BoxCollider2D:
@@ -1512,6 +1561,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TransformableBlock
   isTransformed: 0
   isGuard: 0
+  currentItemType: {fileID: 0}
 --- !u!114 &1014173789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1524,7 +1574,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c299a386a58c742a29884d0a780630, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CollectibleItem
-  itemType: {fileID: 11400000, guid: c0d6bc83dcf14eeecb4c439b416f9ba4, type: 2}
+  itemType: {fileID: 11400000, guid: 5e4c749e49279683184746286f9de7c4, type: 2}
   IsCollectible: 1
 --- !u!61 &1014173790
 BoxCollider2D:
@@ -1891,6 +1941,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TransformableBlock
   isTransformed: 0
   isGuard: 0
+  currentItemType: {fileID: 0}
 --- !u!114 &1093154099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1903,7 +1954,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c299a386a58c742a29884d0a780630, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CollectibleItem
-  itemType: {fileID: 11400000, guid: c0d6bc83dcf14eeecb4c439b416f9ba4, type: 2}
+  itemType: {fileID: 11400000, guid: 5e4c749e49279683184746286f9de7c4, type: 2}
   IsCollectible: 1
 --- !u!61 &1093154100
 BoxCollider2D:
@@ -2192,6 +2243,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TransformableBlock
   isTransformed: 0
   isGuard: 0
+  currentItemType: {fileID: 0}
 --- !u!114 &1556107964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2204,7 +2256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c299a386a58c742a29884d0a780630, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CollectibleItem
-  itemType: {fileID: 11400000, guid: c0d6bc83dcf14eeecb4c439b416f9ba4, type: 2}
+  itemType: {fileID: 11400000, guid: 5e4c749e49279683184746286f9de7c4, type: 2}
   IsCollectible: 1
 --- !u!61 &1556107965
 BoxCollider2D:
@@ -3928,8 +3980,8 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 0.44927633, g: 0.44927633, b: 0.44927633, a: 1}
+  m_Sprite: {fileID: 2820131925045074649, guid: 63757f04ee4ea9cb0b4fdfbd77ab28cd, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3952,6 +4004,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TransformableBlock
   isTransformed: 0
   isGuard: 0
+  currentItemType: {fileID: 0}
 --- !u!1001 &408419997580928303
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5033,7 +5086,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 4140029879453024099, guid: 8542af5d685043646a8cdb3fe69d9050, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 1948265773564865766, guid: 8da4363de92076b10ab9d8a68bad8317, type: 3}
       insertIndex: -1
       addedObject: {fileID: 519420032}
     m_AddedComponents: []
