@@ -1,9 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ui:UXML
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ui="UnityEngine.UIElements"
-    xmlns:uie="UnityEditor.UIElements"
-    xsi:noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd"
->
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/ART/UI/Level-UI/LevelUss.uss?fileID=7433441132597879392&amp;guid=83e5b59da62e93c4485ebe444ac8b10a&amp;type=3#LevelUss"/>
     
+    <!-- HUD Kapsayıcı (Oyun İçi Arayüz) -->
+    <ui:VisualElement name="HUDContainer" class="hud-container">
+        <!-- Üst Kısım: Level Göstergesi ve Butonlar -->
+        <ui:VisualElement class="hud-top-container">
+            <ui:VisualElement name="LevelIndicator" class="hud-level-panel">
+                <ui:Label name="LevelText" text="L" class="hud-level-text"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="hud-buttons-container">
+                <ui:Button name="RestartButton" text="RESTART" class="hud-button"/>
+                <ui:Button name="ExitMenuButton" text="EXIT" class="hud-button"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <!-- Alt Kısım: Envanter -->
+        <ui:VisualElement class="hud-bottom-container">
+            <ui:VisualElement name="InventoryPanel" class="hud-inventory-panel"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+
+    <ui:VisualElement name="PauseOverlay" class="pause-overlay pause-overlay--hidden"/>
+    <ui:VisualElement name="PausePanel" class="pause-panel pause-panel--hidden">
+        <ui:Label text="DURDURULDU" class="pause-title"/>
+        <ui:VisualElement name="PauseButtons" class="pause-buttons-container">
+            <ui:Button text="D E V A M  E T" name="ResumeButton" class="pause-button"/>
+            <ui:Button text="A Y A R L A R" name="SettingsButton" class="pause-button"/>
+            <ui:Button text="A N A  M E N Ü" name="MainMenuButton" class="pause-button"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="SettingsPanel" class="settings-panel settings-panel--hidden">
+        <ui:Label text="AYARLAR" class="settings-title"/>
+        <ui:VisualElement class="settings-content-container">
+            <ui:VisualElement class="slider-container">
+                <ui:Label text="Müzik Sesi" class="slider-label"/>
+                <ui:Slider name="MusicSlider" low-value="0" high-value="100" value="50" class="custom-slider"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="slider-container">
+                <ui:Label text="SFX Sesi" class="slider-label"/>
+                <ui:Slider name="SfxSlider" low-value="0" high-value="100" value="50" class="custom-slider"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:Button text="K A P A T" name="CloseSettings" picking-mode="Ignore" class="pause-button settings-close-button"/>
+    </ui:VisualElement>
+    <ui:VisualElement name="FadeOverlay" picking-mode="Ignore" class="fade-overlay fade-overlay--active"/>
 </ui:UXML>

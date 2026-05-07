@@ -70,6 +70,15 @@ public class Main : MonoBehaviour
         if (_musicSlider != null) _musicSlider.RegisterValueChangedCallback(evt => OnMusicVolumeChanged(evt.newValue));
         if (_sfxSlider != null) _sfxSlider.RegisterValueChangedCallback(evt => OnSfxVolumeChanged(evt.newValue));
 
+        // Sahne başlarken karanlıktan aydınlanma animasyonunu (Fade In) başlat
+        StartCoroutine(FadeInRoutine());
+    }
+
+    private IEnumerator FadeInRoutine()
+    {
+        // UI Toolkit'in ilk karede siyah ekranı tam olarak çizip, CSS stillerini hesaplaması için kısa bir bekleme ekliyoruz.
+        yield return new WaitForSecondsRealtime(0.15f);
+        if (_fadeOverlay != null) _fadeOverlay.RemoveFromClassList("fade-overlay--active");
     }
 
     private void OnDisable()
@@ -159,6 +168,7 @@ public class Main : MonoBehaviour
         {
             _creditsPanel.RemoveFromClassList("credits-panel--hidden");
         }
+        if (_closeCreditsButton != null) _closeCreditsButton.pickingMode = PickingMode.Position; // Tıklanabilir yap
         AudioManager.instance?.PlaySFX(AudioManager.instance.tiklamaSesi); // İsteğe bağlı, varsa tıklama sesi çalar
     }
 
@@ -169,6 +179,7 @@ public class Main : MonoBehaviour
         {
             _creditsPanel.AddToClassList("credits-panel--hidden");
         }
+        if (_closeCreditsButton != null) _closeCreditsButton.pickingMode = PickingMode.Ignore; // Tekrar tıklanamaz yap
         AudioManager.instance?.PlaySFX(AudioManager.instance.tiklamaSesi); // İsteğe bağlı
     }
 
@@ -179,6 +190,7 @@ public class Main : MonoBehaviour
         {
             _settingsPanel.RemoveFromClassList("settings-panel--hidden");
         }
+        if (_closeSettingsButton != null) _closeSettingsButton.pickingMode = PickingMode.Position; // Tıklanabilir yap
         AudioManager.instance?.PlaySFX(AudioManager.instance.tiklamaSesi);
     }
 
@@ -189,6 +201,7 @@ public class Main : MonoBehaviour
         {
             _settingsPanel.AddToClassList("settings-panel--hidden");
         }
+        if (_closeSettingsButton != null) _closeSettingsButton.pickingMode = PickingMode.Ignore; // Tekrar tıklanamaz yap
         AudioManager.instance?.PlaySFX(AudioManager.instance.tiklamaSesi);
     }
 

@@ -1,0 +1,297 @@
+/* --- Genel Font Tanımlaması --- */
+.pause-title, .pause-button {
+    -unity-font-definition: url("project://database/Assets/_Project/ART/UI/FONT/Slackey-Regular.ttf?fileID=12800000&guid=6dc9adb1a8739c049abb8b88cb18b3a4&type=3#Slackey-Regular");
+}
+
+/* --- Pause Ekranı Arka Plan Karartması --- */
+.pause-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7); /* Yarı şeffaf siyah */
+    transition-property: opacity;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
+}
+
+.pause-overlay--hidden {
+    opacity: 0;
+    visibility: hidden;
+    picking-mode: ignore; /* Gizliyken tıklamaları engelle */
+}
+
+/* --- Pause Paneli Tasarımı (Ana Menüdeki Panellerle Aynı) --- */
+.pause-panel {
+    position: absolute;
+    width: 35%;
+    height: 50%;
+    top: 25%;
+    left: 32.5%;
+    background-color: rgb(15, 15, 18); /* Transparanlığı kaldırıp tam katı renk yaptık */
+    border-color: rgb(180, 180, 180);
+    border-width: 2px;
+    border-radius: 15px;
+    align-items: center;
+    justify-content: space-around;
+    padding: 25px;
+    transition-property: opacity, scale;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out-back; /* Yaylanma efekti */
+}
+
+.pause-panel--hidden {
+    opacity: 0;
+    scale: 0.8 0.8;
+    visibility: hidden;
+    picking-mode: ignore;
+}
+
+/* --- Pause Paneli İçerikleri --- */
+.pause-title {
+    font-size: 50px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    letter-spacing: 5px;
+    text-shadow: 4px 4px 0 rgba(120, 80, 200, 0.8);
+}
+
+.pause-buttons-container {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- Pause Butonları (Ana Menü Butonlarıyla Aynı) --- */
+.pause-button {
+    width: 80%;
+    padding: 15px;
+    margin: 10px;
+    background-color: rgba(120, 80, 200, 0.3);
+    color: rgb(255, 255, 255);
+    font-size: 24px;
+    -unity-font-style: bold;
+    border-color: rgb(180, 100, 255);
+    border-width: 2px;
+    border-radius: 12px;
+    transition-property: scale, background-color, border-color;
+    transition-duration: 0.15s;
+    transition-timing-function: ease-in-out-sine;
+}
+
+.pause-button:hover {
+    scale: 1.05 1.05;
+    background-color: rgba(180, 100, 255, 0.6);
+    border-color: rgb(255, 255, 255);
+}
+
+.pause-button:active {
+    scale: 0.95 0.95;
+    background-color: rgba(180, 100, 255, 0.9);
+    border-color: rgb(200, 200, 200);
+    color: rgb(220, 220, 220);
+    transition-duration: 0.05s;
+}
+
+/* --- Ayarlar Paneli Tasarımı --- */
+.settings-panel {
+    position: absolute;
+    width: 40%;
+    height: 60%;
+    top: 20%;
+    left: 30%;
+    background-color: rgb(15, 15, 18); /* Transparanlığı kaldırıp tam katı renk yaptık */
+    border-color: rgb(180, 180, 180);
+    border-width: 2px;
+    border-radius: 15px;
+    align-items: center;
+    justify-content: space-around;
+    padding: 25px;
+    transition-property: opacity, scale;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out-back;
+}
+
+.settings-panel--hidden {
+    opacity: 0;
+    scale: 0.8 0.8;
+    visibility: hidden;
+    picking-mode: ignore;
+}
+
+.settings-title {
+    font-size: 50px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    letter-spacing: 5px;
+    -unity-font-definition: url("project://database/Assets/_Project/ART/UI/FONT/Slackey-Regular.ttf?fileID=12800000&guid=6dc9adb1a8739c049abb8b88cb18b3a4&type=3#Slackey-Regular");
+}
+
+.settings-content-container {
+    width: 80%;
+    justify-content: center;
+}
+
+.slider-container {
+    margin: 15px 0;
+}
+
+.slider-label {
+    font-size: 24px;
+    color: rgb(210, 210, 210);
+    -unity-font-style: bold;
+    margin-bottom: 5px;
+    -unity-font-definition: url("project://database/Assets/_Project/ART/UI/FONT/Slackey-Regular.ttf?fileID=12800000&guid=6dc9adb1a8739c049abb8b88cb18b3a4&type=3#Slackey-Regular");
+}
+
+.custom-slider #unity-tracker {
+    background-color: rgb(40, 40, 45);
+    border-color: rgb(100, 100, 100);
+    border-width: 1px;
+    border-radius: 4px;
+    height: 8px;
+    margin-top: -4px;
+}
+
+.custom-slider #unity-dragger {
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    background-color: rgb(210, 210, 210);
+    border-color: rgb(180, 100, 255);
+    border-width: 2px;
+    margin-top: -12px;
+    transition: scale 0.1s ease-in-out, background-color 0.1s ease-in-out;
+}
+
+.custom-slider #unity-dragger:hover {
+    background-color: rgb(255, 255, 255);
+    scale: 1.15 1.15;
+}
+
+.settings-close-button {
+    width: 60%;
+    background-color: rgba(60, 60, 60, 0.8);
+    border-color: rgb(150, 150, 150);
+}
+
+/* --- Kararma Ekranı (Fade) --- */
+.fade-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(0, 0, 0);
+    opacity: 0;
+    picking-mode: ignore; /* UI işlemlerini engellemesini önler */
+    transition-property: opacity;
+    transition-duration: 1s;
+    transition-timing-function: ease-in-out;
+}
+
+.fade-overlay--active {
+    opacity: 1;
+}
+
+/* --- HUD --- */
+.hud-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    justify-content: space-between;
+    padding: 20px;
+    picking-mode: ignore; /* HUD arkaplanı tıklamaları engellemesin diye */
+}
+
+.hud-top-container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    picking-mode: ignore;
+}
+
+.hud-level-panel {
+    width: 80px;
+    height: 80px;
+    background-color: rgb(15, 15, 18);
+    border-color: rgb(180, 180, 180);
+    border-width: 2px;
+    border-radius: 15px;
+    align-items: center;
+    justify-content: center;
+}
+
+.hud-level-text {
+    font-size: 40px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    -unity-font-definition: url("project://database/Assets/_Project/ART/UI/FONT/Slackey-Regular.ttf?fileID=12800000&guid=6dc9adb1a8739c049abb8b88cb18b3a4&type=3#Slackey-Regular");
+}
+
+.hud-buttons-container {
+    flex-direction: row;
+    picking-mode: ignore;
+}
+
+.hud-button {
+    padding: 10px 20px;
+    margin-left: 10px;
+    background-color: rgba(120, 80, 200, 0.3);
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    -unity-font-style: bold;
+    border-color: rgb(180, 100, 255);
+    border-width: 2px;
+    border-radius: 12px;
+    transition-property: scale, background-color, border-color;
+    transition-duration: 0.15s;
+    transition-timing-function: ease-in-out-sine;
+    -unity-font-definition: url("project://database/Assets/_Project/ART/UI/FONT/Slackey-Regular.ttf?fileID=12800000&guid=6dc9adb1a8739c049abb8b88cb18b3a4&type=3#Slackey-Regular");
+}
+
+.hud-button:hover {
+    scale: 1.05 1.05;
+    background-color: rgba(180, 100, 255, 0.6);
+    border-color: rgb(255, 255, 255);
+}
+
+.hud-button:active {
+    scale: 0.95 0.95;
+    background-color: rgba(180, 100, 255, 0.9);
+    border-color: rgb(200, 200, 200);
+    color: rgb(220, 220, 220);
+    transition-duration: 0.05s;
+}
+
+.hud-bottom-container {
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 20px;
+    picking-mode: ignore;
+}
+
+.hud-inventory-panel {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.2); /* Transparan beyaz */
+    border-radius: 20px; /* Ovalleştirme biraz arttırıldı */
+    padding: 12px; /* İtemlerden azıcık daha büyük olması için iç boşluk arttırıldı */
+    min-height: 84px;
+    min-width: 84px;
+}
+
+/* Envanter içindeki her bir item slotu (Kutu) */
+.hud-inventory-item {
+    width: 60px;
+    height: 60px;
+    margin: 0 10px;
+    background-color: rgba(26, 5, 36, 0.9); /* Temaya uygun arka plan */
+    border-radius: 10px;
+    border-color: rgb(180, 100, 255);
+    border-width: 2px;
+}

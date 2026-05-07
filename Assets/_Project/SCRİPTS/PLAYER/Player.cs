@@ -134,7 +134,16 @@ public class Player : MonoBehaviour
 
     private void LoadTheLevel(string levelName)
     {
-        SceneManager.LoadScene(levelName);
+        LobbyUIS lobbyUI = FindAnyObjectByType<LobbyUIS>();
+        
+        if (lobbyUI != null)
+        {
+            lobbyUI.LoadSceneWithFade(levelName);
+        }
+        else
+        {
+            SceneManager.LoadScene(levelName); // UI bulunamazsa güvenli geçiş (Fail-safe)
+        }
     }
 
     public Vector2 GetLastLookingPoint()
