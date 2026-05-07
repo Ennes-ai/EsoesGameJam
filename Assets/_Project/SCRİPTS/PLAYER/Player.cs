@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     private PlayerEnvanter playerEnvanter;
     private bool IsInPortal = false;
     private string portalName;
+    private bool _isTransitioning = false; // Portala girerken spamlama olmasın diye kontrol değişkeni
 
     public bool IsCanGoLobby = false;
 
@@ -27,9 +28,9 @@ public class Player : MonoBehaviour
         
         playerEnvanter = GetComponent<PlayerEnvanter>();
 
-        if (!PlayerPrefs.HasKey("ReachedLevel"))  // oyun ilk defa aciliyorsa otomatik 1. level acik olsun
+        if (!PlayerPrefs.HasKey("ReachedLevel"))  // oyun ilk defa aciliyorsa otomatik 0. level acik olsun
         {
-            PlayerPrefs.SetInt("ReachedLevel", 1);
+            PlayerPrefs.SetInt("ReachedLevel", 0);
         }
     }
 
@@ -47,7 +48,7 @@ public class Player : MonoBehaviour
             playerEnvanter.UseTheItem();
         }
 
-        if (IsInPortal && Input.GetKeyDown(KeyCode.E) && currentPortalData != null)
+        if (IsInPortal && Input.GetKeyDown(KeyCode.E) && currentPortalData != null && !_isTransitioning)
         {
             HandlePortalLogic();
         }
@@ -60,6 +61,8 @@ public class Player : MonoBehaviour
 
     private void HandlePortalLogic()
     {
+        _isTransitioning = true; // Geçiş başladı, başka tıklamaları engelle
+
         string targetLevel = currentPortalData.LoadingPortalName;
         int reachedLevel = PlayerPrefs.GetInt("ReachedLevel");
 
@@ -80,7 +83,8 @@ public class Player : MonoBehaviour
         // Hedef sahne ismine göre kilit kontrolü yapalım
         bool canEnter = false;
 
-        if (targetLevel == "SampleScene") canEnter = true; // Level 1 her zaman açık
+        if (targetLevel == "Level_0") canEnter = true; // Level_0 her zaman açık
+        else if (targetLevel == "SampleScene" && reachedLevel >= 1) canEnter = true; // Level 1 (SampleScene)
         else if (targetLevel == "Level_2" && reachedLevel >= 2) canEnter = true;
         else if (targetLevel == "Level_3" && reachedLevel >= 3) canEnter = true;
         else if (targetLevel == "Level_4" && reachedLevel >= 4) canEnter = true;
@@ -92,6 +96,7 @@ public class Player : MonoBehaviour
         }
         else
         {
+            _isTransitioning = false; // Geçiş başarısız olursa tekrar E'ye basabilsin
             Debug.Log("Bu seviye henüz kilitli! Önceki seviyeyi bitirmelisin.");
         }
     }
@@ -126,7 +131,15 @@ public class Player : MonoBehaviour
         
         if (lobbyUI != null)
         {
-            lobbyUI.LoadSceneWithFade(levelName);
+            // Eğer bulunduğumuz sahne Level_4 ise portal bizi oyun sonu sinematiğine soksun
+            if (SceneManager.GetActiveScene().name == "Level_4")
+            {
+                lobbyUI.PlayEndingSequence();
+            }
+            else
+            {
+                lobbyUI.LoadSceneWithFade(levelName);
+            }
         }
         else
         {
