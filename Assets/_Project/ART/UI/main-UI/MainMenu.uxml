@@ -1,0 +1,47 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/KaaN-UI/mainMenu.uss?fileID=7433441132597879392&amp;guid=492e4c0b045626d4582db4ad2f686c70&amp;type=3#mainMenu"/>
+    <ui:VisualElement name="Main" picking-mode="Ignore" style="flex-grow: 1; background-color: rgb(26, 5, 36); justify-content: space-around; align-items: center;">
+        <ui:Label text="V I O L A T O R" tabindex="1" picking-mode="Ignore" class="title-label"/>
+        <ui:VisualElement name="Buttons" class="buttons-container">
+            <ui:Button text="O Y N A" name="Play" class="button"/>
+            <ui:Button text="A Y A R L A R" name="Ayarlar" class="button"/>
+            <ui:Button text="Y A P I M C I L A R" name="Yapimcilar" class="button"/>
+            <ui:Button text="Ç I K I S" name="Exit" class="button"/>
+        </ui:VisualElement>
+        
+        <!-- YAPIMCILAR PANELİ -->
+        <ui:VisualElement name="CreditsPanel" class="credits-panel credits-panel--hidden">
+            <ui:Label text="YAPIMCILAR" class="credits-title"/>
+            <ui:VisualElement class="credits-names-container">
+                <ui:Label text="Tuana Taşer" class="credits-name"/>
+                <ui:Label text="Enes Dursun" class="credits-name"/>
+                <ui:Label text="Ali Kaan Turan" class="credits-name"/>
+                <ui:Label text="Arda Coşardemir" class="credits-name"/>
+            </ui:VisualElement>
+            <ui:Button text="K A P A T" name="CloseCredits" class="button credits-close-button"/>
+        </ui:VisualElement>
+
+        <!-- AYARLAR PANELİ -->
+        <ui:VisualElement name="SettingsPanel" class="settings-panel settings-panel--hidden">
+            <ui:Label text="AYARLAR" class="settings-title"/>
+            <ui:VisualElement class="settings-content-container">
+                <ui:VisualElement class="slider-container">
+                    <ui:Label text="Müzik Sesi" class="slider-label"/>
+                    <ui:Slider name="MusicSlider" low-value="0" high-value="100" value="50" class="custom-slider"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="slider-container">
+                    <ui:Label text="SFX Sesi" class="slider-label"/>
+                    <ui:Slider name="SfxSlider" low-value="0" high-value="100" value="50" class="custom-slider"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:Button text="K A P A T" name="CloseSettings" class="button settings-close-button"/>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="LoadingScreen" picking-mode="Ignore" class="loading-screen">
+            <ui:VisualElement class="loading-bar-container">
+                <ui:VisualElement name="LoadingBarFill" class="loading-bar-fill"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="FadeOverlay" picking-mode="Ignore" class="fade-overlay"/>
+    </ui:VisualElement>
+</ui:UXML>
