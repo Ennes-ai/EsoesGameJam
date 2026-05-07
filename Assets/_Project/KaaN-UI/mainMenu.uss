@@ -1,23 +1,104 @@
-:root {
+/* Temel Buton Görünümü */
+.button {
+    width: 80%; /* Konteynerin %80'ini kaplar */
+    padding: 15px; /* İç boşluk, butonları dolgun gösterir */
+    margin: 8px; /* Butonlar arası mesafe */
+    background-color: rgba(120, 80, 200, 0.3); /* Yarı saydam mor arka plan */
+    color: rgb(255, 255, 255);
+    font-size: 26px; /* Yazı boyutu */
+    -unity-font-style: bold; /* Kalın yazı tipi */
+    
+    /* Çerçeve ayarları */
+    border-color: rgb(180, 100, 255);
+    border-width: 2px;
+    border-radius: 12px; /* Köşeleri yuvarlatma */
+    
+    /* Animasyon (Transition) ayarları */
+    transition-property: scale, background-color, border-color;
+    transition-duration: 0.15s;
+    transition-timing-function: ease-in-out-sine;
 }
 
-.button {
-    width: 33%;
-    height: 15%;
-    background-size: 100% 97%;
-    border-top-width: 2px;
-    border-right-width: 2px;
-    border-bottom-width: 2px;
-    border-left-width: 2px;
-    border-left-color: rgb(255, 255, 255);
-    border-right-color: rgb(255, 255, 255);
-    border-top-color: rgb(255, 255, 255);
-    border-bottom-color: rgb(255, 255, 255);
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
-    border-bottom-left-radius: 8px;
-    background-color: rgb(178, 170, 170);
-    -unity-font-style: bold;
-    font-size: 20px;
+/* Fare ile Butonun Üzerine Gelindiğinde (Hover Efekti) */
+.button:hover {
+    scale: 1.05 1.05; /* Butonu %5 büyütür */
+    background-color: rgba(180, 100, 255, 0.6); /* Arka planı belirginleştirir */
+    border-color: rgb(255, 255, 255); /* Çerçeveyi beyaza parlatır */
+}
+
+/* Butona Tıklandığı Anda (Active/Click Animasyonu) */
+.button:active {
+    scale: 0.95 0.95; /* Butonu içeri doğru bastırır (küçültür) */
+    background-color: rgba(180, 100, 255, 0.9); /* Arka planı iyice doldurur */
+    border-color: rgb(200, 200, 200);
+    color: rgb(220, 220, 220); /* Yazı rengini hafif karartır, basılma hissini artırır */
+    
+    /* Tıklama esnasında animasyonun anında tepki vermesi için süreyi kısaltıyoruz */
+    transition-duration: 0.05s;
+}
+
+/* Ekran Kararma (Fade) Efekti İçin Katman */
+.fade-overlay {
+    position: absolute; /* Diğer her şeyin üzerine ve bağımsız yerleşmesi için */
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(0, 0, 0);
+    opacity: 0; /* Başlangıçta tamamen saydam (görünmez) */
+    transition-property: opacity;
+    transition-duration: 1s; /* 1 saniyede yavaşça kararır */
+}
+
+.fade-overlay--active {
+    opacity: 1; /* Kod ile bu class eklendiğinde ekran simsiyah olur */
+}
+
+/* YÜKLEME EKRANI TASARIMI */
+.loading-screen {
+    position: absolute;
+    left: 0; top: 0; right: 0; bottom: 0;
+    justify-content: flex-end; /* Sadece barı alta hizalar */
+    align-items: center;
+    padding-bottom: 150px;
+    opacity: 0; /* Başlangıçta tamamen saydam */
+    picking-mode: ignore; /* Gizliyken tıklanmaları engellemez */
+    transition: opacity 0.5s ease-in; /* Butonların kaybolma süresiyle aynı hızda belirir */
+}
+
+.loading-screen--visible {
+    opacity: 1; /* Kod tetiklendiğinde bar yavaşça belirir */
+}
+
+.loading-bar-container {
+    width: 60%; /* Barın uzunluğu */
+    height: 18px; /* Barın kalınlığı */
+    background-color: rgba(0, 0, 0, 0.5); /* Arka plan koyuluğu */
+    border-radius: 9px;
+    border-color: rgb(180, 100, 255);
+    border-width: 2px;
+    overflow: hidden; /* Taşan iç dolguyu gizler */
+}
+
+.loading-bar-fill {
+    width: 0%; /* KOD İLE ARTACAK (%0'dan %100'e) */
+    height: 100%;
+    background-color: rgb(180, 100, 255);
+}
+
+/* Butonların bulunduğu ana konteyner */
+.buttons-container {
+    flex-grow: 1;
+    width: 52%;
+    min-height: 0%;
+    max-height: 31%;
+    align-items: center;
+    justify-content: space-between;
+    opacity: 1;
+    transition: opacity 0.5s ease-in;
+}
+
+.buttons-container--hidden {
+    opacity: 0;
+    picking-mode: ignore; /* Gizlenirken tıklanmasını engeller */
 }
