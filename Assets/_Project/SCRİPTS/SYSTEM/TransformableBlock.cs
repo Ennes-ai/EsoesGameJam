@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(CollectibleItem))]
 [RequireComponent(typeof(Collider2D))]
@@ -31,6 +32,7 @@ public class TransformableBlock : MonoBehaviour
 
     public void TransformBlock(ItemType newType)
     {
+        //yield return new WaitForSeconds(Random.Range(0f, 0.5f));
         isTransformed = true;
         spriteRenderer.sprite = newType.itemSprite; 
         gameObject.tag = newType.itemTag;
@@ -49,6 +51,11 @@ public class TransformableBlock : MonoBehaviour
             AstarPath.active.UpdateGraphs(col2D.bounds);
         }
     }
+
+    /*public void StartTransform(ItemType newType)
+    {
+        StartCoroutine(TransformBlock(newType));
+    }*/
 
     public void RevertToOriginal()
     {

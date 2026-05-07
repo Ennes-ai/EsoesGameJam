@@ -194,6 +194,10 @@ PrefabInstance:
       propertyPath: LoadingPortalName
       value: Level_0
       objectReference: {fileID: 0}
+    - target: {fileID: 7300735377842386598, guid: 0f179cc57dba94c45a05352a4995ffa4, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1253,7 +1257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c1270bb53b0e349ac7575b5b3475e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Portals
-  LoadingPortalName: SampleScene
+  LoadingPortalName: Level_1
   isVictoryPortal: 0
   unlockLevelIndex: 0
 --- !u!1660057539 &9223372036854775807
