@@ -18,6 +18,11 @@ public class PlayerEnvanter : MonoBehaviour
         currentItem = incomingItem;
         collectedItems.Add(incomingItem);
         Debug.Log("Envantere eklendi: " + incomingItem);
+
+        if (AudioManager.instance != null && AudioManager.instance.itemPickUp != null)
+        {
+            AudioManager.instance.PlaySFX(AudioManager.instance.itemPickUp);
+        }
     }
 
    public void UseTheItem()
