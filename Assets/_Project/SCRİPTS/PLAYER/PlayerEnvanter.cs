@@ -1,18 +1,19 @@
 using System.Collections.Generic;
 using NUnit.Framework;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerEnvanter : MonoBehaviour
 {
-    public ItemType.ItemCategory currentItem = ItemType.ItemCategory.None;
-    public List<ItemType.ItemCategory> collectedItems = new List<ItemType.ItemCategory>();
+    public ItemType currentItem = null;
+    public List<ItemType> collectedItems = new List<ItemType>();
     public static PlayerEnvanter Instance;
     void Awake() 
     { 
         Instance = this; 
     }
 
-    public void AddToEnvanter(ItemType.ItemCategory incomingItem)
+    public void AddToEnvanter(ItemType incomingItem)
     {
         currentItem = incomingItem;
         collectedItems.Add(incomingItem);
@@ -20,24 +21,24 @@ public class PlayerEnvanter : MonoBehaviour
     }
 
    public void UseTheItem()
-{
-    // 1. Önce kontrol et: Elimde gerçekten bir şey var mı?
-    if (currentItem == ItemType.ItemCategory.None) return;
+    {
+        // 1. Önce kontrol et: Elimde gerçekten bir şey var mı?
+        if (currentItem == null) return;
 
-    // 2. Değeri bir geçici değişkende tut (Sıfırlamadan önce silmek için)
-    ItemType.ItemCategory itemToBeUsed = currentItem;
+        // 2. Değeri bir geçici değişkende tut (Sıfırlamadan önce silmek için)
+        ItemType itemToBeUsed = currentItem;
 
-    // 3. Dünyaya duyur (Nehir bunu duyacak)
-    GameEvents.TriggerItemUsed(itemToBeUsed);
-    
-    // 4. Listeden sil (Hala 'Stone' iken silmelisin)
-    RemoveTheItem(itemToBeUsed);
+        // 3. Dünyaya duyur (Nehir bunu duyacak)
+        GameEvents.TriggerItemUsed(itemToBeUsed);
+        
+        // 4. Listeden sil (Hala 'Stone' iken silmelisin)
+        RemoveTheItem(itemToBeUsed);
 
-    // 5. En son eldeki eşyayı sıfırla
-    currentItem = ItemType.ItemCategory.None;
-}
+        // 5. En son eldeki eşyayı sıfırla
+        currentItem = null;
+    }
 
-    public void RemoveTheItem(ItemType.ItemCategory itemToRemove)
+    public void RemoveTheItem(ItemType itemToRemove)
     {
         if (HasItem(itemToRemove))
         {
@@ -46,8 +47,13 @@ public class PlayerEnvanter : MonoBehaviour
         }
     }
 
-    public bool HasItem(ItemType.ItemCategory itemToCheck)
+    public bool HasItem(ItemType itemToCheck)
     {
         return collectedItems.Contains(itemToCheck);
+    }
+
+    public ItemType GetItemAtHand()
+    {
+        return currentItem;
     }
 }

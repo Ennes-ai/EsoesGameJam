@@ -130,9 +130,14 @@ public class Enemy : MonoBehaviour
 
         yield return new WaitForSeconds(.5f);
 
+        // Eğer hedefimiz hala geçerliyse ve hala dönüştürülmüş durumdaysa
         if(targetBlock != null && targetBlock.isTransformed)
         {
-            targetBlock.RevertToOriginal();
+            // ESKİ KOD: Sadece dokunduğu bloğu düzeltiyordu
+            // targetBlock.RevertToOriginal();
+
+            // YENİ KOD: Dokunduğu bloğun "şu anki türüne" sahip TÜM dönüştürülmüş blokları düzeltir
+            GlobalTransformationManager.RevertAllBlocksOfCurrentType(targetBlock.currentItemType);
         }
 
         path = null;

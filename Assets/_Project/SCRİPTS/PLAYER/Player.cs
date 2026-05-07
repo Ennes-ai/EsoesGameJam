@@ -25,8 +25,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         // Klavye veya gamepad girdilerini alıyoruz (Keskin dönüşler için GetAxisRaw)
-        movement.x = Input.GetAxis("Horizontal");
-        movement.y = Input.GetAxis("Vertical");
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
 
         // Çapraz giderken hızlanmayı önlemek için vektörü normalize ediyoruz
         movement = movement.normalized;
@@ -92,5 +92,10 @@ public class Player : MonoBehaviour
     private void LoadTheLevel(string levelName)
     {
         SceneManager.LoadScene(levelName);
+    }
+
+    public Vector2 GetLastLookingPoint()
+    {
+        return movement;
     }
 }
