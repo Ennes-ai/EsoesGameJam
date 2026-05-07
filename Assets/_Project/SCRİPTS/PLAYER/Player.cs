@@ -136,4 +136,9 @@ public class Player : MonoBehaviour
     {
         SceneManager.LoadScene(levelName);
     }
+
+    public Vector2 GetLastLookingPoint()
+    {
+        return movement;
+    }
 }
