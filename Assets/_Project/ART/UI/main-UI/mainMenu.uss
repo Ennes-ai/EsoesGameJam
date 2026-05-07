@@ -1,0 +1,242 @@
+.title-label {
+    font-size: 110px;
+    color: rgb(240, 230, 255);
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    text-shadow: 4px 4px 0 rgba(120, 80, 200, 0.8);
+    letter-spacing: 10px;
+}
+
+.button {
+    width: 80%;
+    padding: 15px;
+    margin: 8px;
+    background-color: rgba(120, 80, 200, 0.3);
+    color: rgb(255, 255, 255);
+    font-size: 26px;
+    -unity-font-style: bold;
+    border-color: rgb(180, 100, 255);
+    border-width: 2px;
+    border-radius: 12px;
+    transition-property: scale, background-color, border-color;
+    transition-duration: 0.15s;
+    transition-timing-function: ease-in-out-sine;
+    -unity-font-definition: url("project://database/Assets/_Project/ART/UI/FONT/Slackey-Regular.ttf?fileID=12800000&guid=6dc9adb1a8739c049abb8b88cb18b3a4&type=3#Slackey-Regular");
+    visibility: visible;
+}
+
+.button:hover {
+    scale: 1.05 1.05;
+    background-color: rgba(180, 100, 255, 0.6);
+    border-color: rgb(255, 255, 255);
+}
+
+.button:active {
+    scale: 0.95 0.95;
+    background-color: rgba(180, 100, 255, 0.9);
+    border-color: rgb(200, 200, 200);
+    color: rgb(220, 220, 220);
+    transition-duration: 0.05s;
+}
+
+.fade-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(0, 0, 0);
+    opacity: 0;
+    picking-mode: ignore; /* UI işlemlerini engellemesini önler */
+    transition-property: opacity;
+    transition-duration: 1s;
+    transition-timing-function: ease-in-out;
+}
+
+.fade-overlay--active {
+    opacity: 1;
+}
+
+.loading-screen {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 150px;
+    opacity: 0;
+    visibility: hidden;
+    picking-mode: ignore;
+    transition: opacity 0.5s ease-in;
+}
+
+.loading-screen--visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.loading-bar-container {
+    width: 60%;
+    height: 18px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 9px;
+    border-color: rgb(180, 100, 255);
+    border-width: 2px;
+    overflow: hidden;
+}
+
+.loading-bar-fill {
+    width: 0%;
+    height: 100%;
+    background-color: rgb(180, 100, 255);
+}
+
+.buttons-container {
+    flex-grow: 1;
+    width: 52%;
+    align-items: center;
+    justify-content: center; /* Butonların konteyner dışına taşmasını engeller ve ortalar */
+    opacity: 1;
+    transition: opacity 0.5s ease-in;
+}
+
+.buttons-container--hidden {
+    opacity: 0;
+    visibility: hidden;
+    picking-mode: ignore;
+}
+
+.credits-panel {
+    position: absolute;
+    width: 40%;
+    height: 60%;
+    top: 20%;
+    left: 30%;
+    background-color: rgba(15, 15, 18, 0.98);
+    border-color: rgb(180, 180, 180);
+    border-width: 2px;
+    border-radius: 15px;
+    align-items: center;
+    justify-content: space-around;
+    padding: 25px;
+    transition-property: opacity, scale;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out-back;
+}
+
+.credits-panel--hidden {
+    opacity: 0;
+    scale: 0.8 0.8;
+    visibility: hidden;
+    picking-mode: ignore; /* Görünmezken fare tıklamalarını çalmasını KESİNLİKLE engeller */
+}
+
+.credits-title {
+    font-size: 45px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    letter-spacing: 5px;
+    -unity-font-definition: url("project://database/Assets/_Project/ART/UI/FONT/Slackey-Regular.ttf?fileID=12800000&guid=6dc9adb1a8739c049abb8b88cb18b3a4&type=3#Slackey-Regular");
+}
+
+.credits-names-container {
+    align-items: center;
+    justify-content: center;
+}
+
+.credits-name {
+    font-size: 35px;
+    color: rgb(210, 210, 210);
+    margin: 6px 0;
+    -unity-font-style: bold;
+    -unity-font-definition: url("project://database/Assets/_Project/ART/UI/FONT/Slackey-Regular.ttf?fileID=12800000&guid=6dc9adb1a8739c049abb8b88cb18b3a4&type=3#Slackey-Regular");
+}
+
+.credits-close-button {
+    width: 60%;
+    background-color: rgba(60, 60, 60, 0.8);
+    border-color: rgb(150, 150, 150);
+}
+
+.settings-panel {
+    position: absolute;
+    width: 40%;
+    height: 60%;
+    top: 20%;
+    left: 30%;
+    background-color: rgba(15, 15, 18, 0.98);
+    border-color: rgb(180, 180, 180);
+    border-width: 2px;
+    border-radius: 15px;
+    align-items: center;
+    justify-content: space-around;
+    padding: 25px;
+    transition-property: opacity, scale;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out-back;
+}
+
+.settings-panel--hidden {
+    opacity: 0;
+    scale: 0.8 0.8;
+    visibility: hidden;
+    picking-mode: ignore; /* Görünmezken fare tıklamalarını çalmasını KESİNLİKLE engeller */
+}
+
+.settings-title {
+    font-size: 56px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    letter-spacing: 5px;
+    -unity-font-definition: url("project://database/Assets/_Project/ART/UI/FONT/Slackey-Regular.ttf?fileID=12800000&guid=6dc9adb1a8739c049abb8b88cb18b3a4&type=3#Slackey-Regular");
+}
+
+.settings-content-container {
+    width: 80%;
+    justify-content: center;
+}
+
+.slider-container {
+    margin: 15px 0;
+}
+
+.slider-label {
+    font-size: 24px;
+    color: rgb(210, 210, 210);
+    -unity-font-style: bold;
+    margin-bottom: 5px;
+    -unity-font-definition: url("project://database/Assets/_Project/ART/UI/FONT/Slackey-Regular.ttf?fileID=12800000&guid=6dc9adb1a8739c049abb8b88cb18b3a4&type=3#Slackey-Regular");
+}
+
+.custom-slider #unity-tracker {
+    background-color: rgb(40, 40, 45);
+    border-color: rgb(100, 100, 100);
+    border-width: 1px;
+    border-radius: 4px;
+    height: 8px;
+    margin-top: -4px;
+}
+
+.custom-slider #unity-dragger {
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    background-color: rgb(210, 210, 210);
+    border-color: rgb(180, 100, 255);
+    border-width: 2px;
+    margin-top: -12px;
+    transition: scale 0.1s ease-in-out, background-color 0.1s ease-in-out;
+}
+
+.custom-slider #unity-dragger:hover {
+    background-color: rgb(255, 255, 255);
+    scale: 1.15 1.15;
+}
+
+.settings-close-button {
+    width: 60%;
+    background-color: rgba(60, 60, 60, 0.8);
+    border-color: rgb(150, 150, 150);
+}

@@ -8,11 +8,19 @@ public class Main : MonoBehaviour
 {
     private UIDocument _uiDocument;
     private Button _playButton;
+    private Button _creditsButton;
+    private Button _closeCreditsButton;
+    private Button _settingsButton;
+    private Button _closeSettingsButton;
     private Button _exitButton;
     private VisualElement _fadeOverlay;
     private VisualElement _loadingScreen;
     private VisualElement _loadingBarFill;
     private VisualElement _buttonsContainer;
+    private VisualElement _creditsPanel;
+    private VisualElement _settingsPanel;
+    private Slider _musicSlider;
+    private Slider _sfxSlider;
 
     private void OnEnable()
     {
@@ -26,6 +34,15 @@ public class Main : MonoBehaviour
         // Şimdilik "PlayButton" ve "ExitButton" olarak farz ediyorum.
         _playButton = root.Q<Button>("Play");
         _exitButton = root.Q<Button>("Exit");
+        _creditsButton = root.Q<Button>("Yapimcilar");
+        _settingsButton = root.Q<Button>("Ayarlar");
+        _closeCreditsButton = root.Q<Button>("CloseCredits");
+        _closeSettingsButton = root.Q<Button>("CloseSettings");
+        
+        _creditsPanel = root.Q<VisualElement>("CreditsPanel");
+        _settingsPanel = root.Q<VisualElement>("SettingsPanel");
+        _musicSlider = root.Q<Slider>("MusicSlider");
+        _sfxSlider = root.Q<Slider>("SfxSlider");
 
         // Siyah kararma ekranını buluyoruz
         _fadeOverlay = root.Q<VisualElement>("FadeOverlay");
@@ -43,6 +60,25 @@ public class Main : MonoBehaviour
 
         if (_exitButton != null) _exitButton.clicked += OnExitButtonClicked;
         else Debug.LogWarning("Exit butonunun ismini UI Builder'da 'ExitButton' yaptığından emin ol!");
+        
+        if (_creditsButton != null) _creditsButton.clicked += OnCreditsButtonClicked;
+        if (_closeCreditsButton != null) _closeCreditsButton.clicked += OnCloseCreditsButtonClicked;
+        if (_settingsButton != null) _settingsButton.clicked += OnSettingsButtonClicked;
+        if (_closeSettingsButton != null) _closeSettingsButton.clicked += OnCloseSettingsButtonClicked;
+        
+        // Slider değiştiğinde eşzamanlı ses değiştirme tetikleyicisi
+        if (_musicSlider != null) _musicSlider.RegisterValueChangedCallback(evt => OnMusicVolumeChanged(evt.newValue));
+        if (_sfxSlider != null) _sfxSlider.RegisterValueChangedCallback(evt => OnSfxVolumeChanged(evt.newValue));
+
+        // Sahne başlarken karanlıktan aydınlanma animasyonunu (Fade In) başlat
+        StartCoroutine(FadeInRoutine());
+    }
+
+    private IEnumerator FadeInRoutine()
+    {
+        // UI Toolkit'in ilk karede siyah ekranı tam olarak çizip, CSS stillerini hesaplaması için kısa bir bekleme ekliyoruz.
+        yield return new WaitForSecondsRealtime(0.15f);
+        if (_fadeOverlay != null) _fadeOverlay.RemoveFromClassList("fade-overlay--active");
     }
 
     private void OnDisable()
@@ -50,6 +86,12 @@ public class Main : MonoBehaviour
         // Script kapanırken veya obje yok olurken event aboneliklerini kaldırmak bellek yönetimi için iyi bir pratiktir.
         if (_playButton != null) _playButton.clicked -= OnPlayButtonClicked;
         if (_exitButton != null) _exitButton.clicked -= OnExitButtonClicked;
+        
+        if (_creditsButton != null) _creditsButton.clicked -= OnCreditsButtonClicked;
+        if (_closeCreditsButton != null) _closeCreditsButton.clicked -= OnCloseCreditsButtonClicked;
+        
+        if (_settingsButton != null) _settingsButton.clicked -= OnSettingsButtonClicked;
+        if (_closeSettingsButton != null) _closeSettingsButton.clicked -= OnCloseSettingsButtonClicked;
     }
 
     private void OnPlayButtonClicked()
@@ -116,6 +158,68 @@ public class Main : MonoBehaviour
         if (asyncLoad != null)
         {
             asyncLoad.allowSceneActivation = true;
+        }
+    }
+
+    private void OnCreditsButtonClicked()
+    {
+        // Panelin gizli class'ını silerek görünür yapan animasyonu tetikliyoruz
+        if (_creditsPanel != null)
+        {
+            _creditsPanel.RemoveFromClassList("credits-panel--hidden");
+        }
+        if (_closeCreditsButton != null) _closeCreditsButton.pickingMode = PickingMode.Position; // Tıklanabilir yap
+        AudioManager.instance?.PlaySFX(AudioManager.instance.tiklamaSesi); // İsteğe bağlı, varsa tıklama sesi çalar
+    }
+
+    private void OnCloseCreditsButtonClicked()
+    {
+        // Paneli tekrar küçültüp yok eden class'ı ekliyoruz
+        if (_creditsPanel != null)
+        {
+            _creditsPanel.AddToClassList("credits-panel--hidden");
+        }
+        if (_closeCreditsButton != null) _closeCreditsButton.pickingMode = PickingMode.Ignore; // Tekrar tıklanamaz yap
+        AudioManager.instance?.PlaySFX(AudioManager.instance.tiklamaSesi); // İsteğe bağlı
+    }
+
+    private void OnSettingsButtonClicked()
+    {
+        // Ayarlar menüsünü görünür yapar
+        if (_settingsPanel != null)
+        {
+            _settingsPanel.RemoveFromClassList("settings-panel--hidden");
+        }
+        if (_closeSettingsButton != null) _closeSettingsButton.pickingMode = PickingMode.Position; // Tıklanabilir yap
+        AudioManager.instance?.PlaySFX(AudioManager.instance.tiklamaSesi);
+    }
+
+    private void OnCloseSettingsButtonClicked()
+    {
+        // Ayarlar menüsünü gizler
+        if (_settingsPanel != null)
+        {
+            _settingsPanel.AddToClassList("settings-panel--hidden");
+        }
+        if (_closeSettingsButton != null) _closeSettingsButton.pickingMode = PickingMode.Ignore; // Tekrar tıklanamaz yap
+        AudioManager.instance?.PlaySFX(AudioManager.instance.tiklamaSesi);
+    }
+
+    private void OnMusicVolumeChanged(float value)
+    {
+        // AudioManager bulunduysa Müzik sesini slider değerine göre (0.0 - 1.0 arası) ayarlar
+        if (AudioManager.instance != null && AudioManager.instance.musicSource != null)
+        {
+            AudioManager.instance.musicSource.volume = value / 100f;
+        }
+    }
+
+    private void OnSfxVolumeChanged(float value)
+    {
+        // AudioManager bulunduysa Efekt sesini slider değerine göre ayarlar
+        if (AudioManager.instance != null && AudioManager.instance.sfxSource != null)
+        {
+            AudioManager.instance.sfxSource.volume = value / 100f;
         }
     }
 
