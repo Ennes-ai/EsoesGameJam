@@ -295,3 +295,75 @@
     border-color: rgb(180, 100, 255);
     border-width: 2px;
 }
+
+/* --- OYUN SONU (ENDING) EKRANI --- */
+.ending-screen {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 150px;
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+}
+
+.ending-screen--hidden {
+    opacity: 0;
+    visibility: hidden;
+    picking-mode: ignore;
+}
+
+.ending-title {
+    font-size: 110px;
+    color: rgb(240, 230, 255);
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    text-shadow: 4px 4px 0 rgba(120, 80, 200, 0.8);
+    letter-spacing: 10px;
+    margin-bottom: 100px;
+    -unity-font-definition: url("project://database/Assets/_Project/ART/UI/FONT/Slackey-Regular.ttf?fileID=12800000&guid=6dc9adb1a8739c049abb8b88cb18b3a4&type=3#Slackey-Regular");
+}
+
+.ending-message {
+    font-size: 60px;
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-center;
+    -unity-font-definition: url("project://database/Assets/_Project/ART/UI/FONT/Slackey-Regular.ttf?fileID=12800000&guid=6dc9adb1a8739c049abb8b88cb18b3a4&type=3#Slackey-Regular");
+    transition: opacity 2s ease-in-out; /* 2 Saniyede yavaşça belirme animasyonu */
+}
+
+.ending-credits-container {
+    margin-top: 60px;
+    align-items: center;
+    transition: opacity 2s ease-in-out;
+}
+
+.ending-credits-title {
+    font-size: 40px;
+    color: rgb(180, 100, 255);
+    -unity-font-style: bold;
+    margin-bottom: 15px;
+    -unity-font-definition: url("project://database/Assets/_Project/ART/UI/FONT/Slackey-Regular.ttf?fileID=12800000&guid=6dc9adb1a8739c049abb8b88cb18b3a4&type=3#Slackey-Regular");
+}
+
+.ending-credits-row {
+    flex-direction: row;
+    flex-wrap: wrap; /* İsimler sığmazsa otomatik alt satıra geçer */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.ending-credits-name {
+    font-size: 30px;
+    color: rgb(210, 210, 210);
+    margin: 10px 25px; /* Yan yana ve düzgün durmaları için kenar boşlukları */
+    -unity-font-definition: url("project://database/Assets/_Project/ART/UI/FONT/Slackey-Regular.ttf?fileID=12800000&guid=6dc9adb1a8739c049abb8b88cb18b3a4&type=3#Slackey-Regular");
+}
+
+.ending-hidden-text {
+    opacity: 0;
+}

@@ -24,6 +24,10 @@ public class LobbyUIS : MonoBehaviour
     private Button _hudExitButton;
     private int _lastInventoryCount = -1;
 
+    private VisualElement _endingScreen;
+    private Label _endingMessage;
+    private VisualElement _endingCredits;
+
     private bool _isPaused = false;
 
     private void OnEnable()
@@ -60,6 +64,11 @@ public class LobbyUIS : MonoBehaviour
         if (_musicSlider != null) _musicSlider.RegisterValueChangedCallback(evt => OnMusicVolumeChanged(evt.newValue));
         if (_sfxSlider != null) _sfxSlider.RegisterValueChangedCallback(evt => OnSfxVolumeChanged(evt.newValue));
         
+        // Oyun Sonu (Ending) Elemanları
+        _endingScreen = root.Q<VisualElement>("EndingScreen");
+        _endingMessage = root.Q<Label>("EndingMessage");
+        _endingCredits = root.Q<VisualElement>("EndingCredits");
+
         // HUD Elemanlarını UXML'den alıyoruz
         _inventoryPanel = root.Q<VisualElement>("InventoryPanel");
         _levelText = root.Q<Label>("LevelText");
@@ -113,6 +122,7 @@ public class LobbyUIS : MonoBehaviour
         switch (sceneName)
         {
             case "Lobby": _levelText.text = "L"; break;
+            case "Level_0": _levelText.text = "L0"; break;
             case "SampleScene": _levelText.text = "L1"; break;
             case "Level_2": _levelText.text = "L2"; break;
             case "Level_3": _levelText.text = "L3"; break;
@@ -251,5 +261,39 @@ public class LobbyUIS : MonoBehaviour
         if (_fadeOverlay != null) _fadeOverlay.AddToClassList("fade-overlay--active");
         yield return new WaitForSecondsRealtime(1f);
         SceneManager.LoadScene(sceneName);
+    }
+
+    // Level_4 bittiğinde çağrılacak özel sinematik geçiş
+    public void PlayEndingSequence()
+    {
+        StartCoroutine(EndingSequenceRoutine());
+    }
+
+    private IEnumerator EndingSequenceRoutine()
+    {
+        Time.timeScale = 1f;
+
+        // 1. Ekran yavaşça kararır
+        if (_fadeOverlay != null) _fadeOverlay.AddToClassList("fade-overlay--active");
+        yield return new WaitForSecondsRealtime(1.5f);
+
+        // 2. Kararma bitince siyah renkli Oyun Sonu ekranı görünür yapılır
+        if (_endingScreen != null) _endingScreen.RemoveFromClassList("ending-screen--hidden");
+        
+        // 3. Ekranda sadece oyunun adı (VIOLATOR) varken 2 saniye bekle
+        yield return new WaitForSecondsRealtime(2f);
+
+        // 4. "Son..." yazısı ve Yapımcılar yavaşça belirsin (CSS sayesinde 2 saniye sürecek)
+        if (_endingMessage != null) _endingMessage.RemoveFromClassList("ending-hidden-text");
+        if (_endingCredits != null) _endingCredits.RemoveFromClassList("ending-hidden-text");
+
+        // 5. Oyuncu yazıları okusun diye 8 saniye bekle
+        yield return new WaitForSecondsRealtime(8f);
+
+        // 6. Sadece yazıları karartıp ekranı simsiyah yap (Fade Out)
+        if (_endingScreen != null) _endingScreen.AddToClassList("ending-screen--hidden");
+        yield return new WaitForSecondsRealtime(1.5f);
+
+        SceneManager.LoadScene("MainMenu");
     }
 }
