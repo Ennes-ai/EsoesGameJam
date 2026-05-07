@@ -435,6 +435,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Portals
   LoadingPortalName: Level_4
+  isVictoryPortal: 0
+  unlockLevelIndex: 0
 --- !u!1 &1182854662
 GameObject:
   m_ObjectHideFlags: 0
@@ -577,6 +579,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Portals
   LoadingPortalName: Level_2
+  isVictoryPortal: 0
+  unlockLevelIndex: 0
 --- !u!1 &1335787073
 GameObject:
   m_ObjectHideFlags: 0
@@ -1045,6 +1049,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Portals
   LoadingPortalName: Level_3
+  isVictoryPortal: 0
+  unlockLevelIndex: 0
 --- !u!212 &3107217379598094210
 SpriteRenderer:
   serializedVersion: 2
@@ -1186,7 +1192,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c1270bb53b0e349ac7575b5b3475e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Portals
-  LoadingPortalName: SampleScene
+  LoadingPortalName: Level_1
+  isVictoryPortal: 0
+  unlockLevelIndex: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -38,6 +38,11 @@ public class TransformableBlock : MonoBehaviour
         
         // YENİ: Dönüştüğünde güncel türü değiştir
         currentItemType = newType;
+
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlayPopSound();
+        }
         
         if (AstarPath.active != null)
         {

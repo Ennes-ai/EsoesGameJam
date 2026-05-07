@@ -21,7 +21,15 @@ public class ThrownItem : MonoBehaviour
 
         if(rb.linearVelocity.magnitude < stopThreshold)
         {
-            Destroy(gameObject);
+            if (GlobalTransformationManager.Instance != null)
+            {
+                GlobalTransformationManager.Instance.ProcessStop(itemType, transform.position, gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);                
+            }
+
         }
     }
 

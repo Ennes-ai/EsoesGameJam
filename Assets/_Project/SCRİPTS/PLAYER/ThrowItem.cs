@@ -35,6 +35,11 @@ public class ThrowItem : MonoBehaviour
         {
             return;
         }
+
+        if (AudioManager.instance != null && AudioManager.instance.itemThrowSound != null)
+        {
+            AudioManager.instance.PlaySFX(AudioManager.instance.itemThrowSound);
+        }
         
         // Önce objeyi sahnede yaratıyoruz (Instantiate)
         GameObject thrownInstance = Instantiate(itemToThrowPrefab, firePoint.transform.position, firePoint.transform.rotation);
@@ -46,6 +51,8 @@ public class ThrowItem : MonoBehaviour
             thrownScript.itemType = itemToThrowType;
             Debug.Log("Fırlatılan kopya tipi: " + thrownScript.itemType);
         }
+
+        PlayerEnvanter.Instance.UseTheItem();
     }
 
     void UpdateFirePointRotation()

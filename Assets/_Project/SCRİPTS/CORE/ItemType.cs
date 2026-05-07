@@ -7,7 +7,9 @@ public enum ItemCategory
     Wall,
     River,
     Door,
-    Key
+    Key,
+    Stick,
+    Flower
 }
 
 [CreateAssetMenu(fileName = "ItemType", menuName = "Scriptable Objects/ItemType")]

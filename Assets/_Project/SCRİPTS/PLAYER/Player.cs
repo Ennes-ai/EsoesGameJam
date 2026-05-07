@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
 
     public bool IsCanGoLobby = false;
 
-    public bool CanGoSampleScene  = true , CanGoLevel_2 = false , CanGoLevel_3 = false, CanGoLevel_4 = false ;
+    private Portals currentPortalData;
 
     void Start()
     {
@@ -26,6 +26,11 @@ public class Player : MonoBehaviour
         rb.interpolation = RigidbodyInterpolation2D.Interpolate;
         
         playerEnvanter = GetComponent<PlayerEnvanter>();
+
+        if (!PlayerPrefs.HasKey("ReachedLevel"))  // oyun ilk defa aciliyorsa otomatik 1. level acik olsun
+        {
+            PlayerPrefs.SetInt("ReachedLevel", 1);
+        }
     }
 
     void Update()
@@ -41,56 +46,10 @@ public class Player : MonoBehaviour
         {
             playerEnvanter.UseTheItem();
         }
-        if (IsInPortal && Input.GetKeyDown(KeyCode.E))
+
+        if (IsInPortal && Input.GetKeyDown(KeyCode.E) && currentPortalData != null)
         {
-            // Portala girdiğinde E tuşuna basılırsa sahne geçişi yap
-            if (SceneManager.GetActiveScene().name != portalName) // Aynı sahneye geçiş yapmayı önlemek için
-            {
-                // Hedef portal 'Lobby' ise ve iznimiz yoksa geçişi engelle
-                #region Sahne Geçiş Kontrolleri
-                if (portalName == "Lobby" && !IsCanGoLobby)
-                {
-                    Debug.Log("Lobiye dönmek için henüz iznin yok!");
-                    return;
-                }
-                else if (portalName == "Lobby" && IsCanGoLobby)
-                {
-                    LoadTheLevel(levelName : portalName);
-                }else if (portalName == "SampleScene" && !CanGoSampleScene)
-                {
-                    Debug.Log("SampleScene'e geçmek için henüz iznin yok!");
-                    return;
-                }
-                else if (portalName == "SampleScene" && CanGoSampleScene)
-                {
-                    LoadTheLevel(levelName : portalName);
-                }else if (portalName == "Level_2" && !CanGoLevel_2)
-                {
-                    Debug.Log("Level_2'ye geçmek için henüz iznin yok!");
-                    return;
-                }
-                else if (portalName == "Level_2" && CanGoLevel_2)
-                {
-                    LoadTheLevel(levelName : portalName);
-                }else if (portalName == "Level_3" && !CanGoLevel_3)
-                {
-                    Debug.Log("Level_3'e geçmek için henüz iznin yok!");
-                    return; 
-                }
-                else if (portalName == "Level_3" && CanGoLevel_3)
-                {
-                    LoadTheLevel(levelName : portalName);
-                }else if (portalName == "Level_4" && !CanGoLevel_4)
-                {
-                    Debug.Log("Level_4'e geçmek için henüz iznin yok!");
-                    return;
-                }
-                else if (portalName == "Level_4" && CanGoLevel_4)
-                {
-                    LoadTheLevel(levelName : portalName);
-                }
-                #endregion
-            }
+            HandlePortalLogic();
         }
 
         if (Input.GetKeyDown(KeyCode.F))
@@ -99,36 +58,65 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void HandlePortalLogic()
+    {
+        string targetLevel = currentPortalData.LoadingPortalName;
+        int reachedLevel = PlayerPrefs.GetInt("ReachedLevel");
+
+        // 1. Durum: Seviye sonundaki "Zafer" portalındaysak (Örn: Level 1 bitti)
+        if (currentPortalData.isVictoryPortal)
+        {
+            // Eğer bitirdiğimiz level, açılacak olandan büyükse kilidi güncelle
+            if (currentPortalData.unlockLevelIndex > reachedLevel)
+            {
+                PlayerPrefs.SetInt("ReachedLevel", currentPortalData.unlockLevelIndex);
+                Debug.Log("YENİ LEVEL AÇILDI: Level " + currentPortalData.unlockLevelIndex);
+            }
+            LoadTheLevel(targetLevel); // Genelde "Lobby" olur
+            return;
+        }
+
+        // 2. Durum: Lobideki levellere giriş portallarındaysak
+        // Hedef sahne ismine göre kilit kontrolü yapalım
+        bool canEnter = false;
+
+        if (targetLevel == "SampleScene") canEnter = true; // Level 1 her zaman açık
+        else if (targetLevel == "Level_2" && reachedLevel >= 2) canEnter = true;
+        else if (targetLevel == "Level_3" && reachedLevel >= 3) canEnter = true;
+        else if (targetLevel == "Level_4" && reachedLevel >= 4) canEnter = true;
+        else if (targetLevel == "Lobby") canEnter = true;
+
+        if (canEnter)
+        {
+            LoadTheLevel(targetLevel);
+        }
+        else
+        {
+            Debug.Log("Bu seviye henüz kilitli! Önceki seviyeyi bitirmelisin.");
+        }
+    }
+
     void FixedUpdate()
     {
-        // Fizik tabanlı hareketi burada uyguluyoruz
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D other) 
     {
-          if (other.gameObject.CompareTag("Portal"))
+        if (other.CompareTag("Portal"))
         {
             IsInPortal = true;
-            Portals portalData = other.gameObject.GetComponent<Portals>();
-            if (portalData != null)
-            {
-                portalName = portalData.LoadingPortalName;
-
-                Debug.Log("Portala girdi: " + portalName);
-
-                
-              
-            }
+            currentPortalData = other.GetComponent<Portals>();
+            if (currentPortalData != null) Debug.Log("Portalın önündesin: " + currentPortalData.LoadingPortalName);
         }
     }
 
     private void OnTriggerExit2D(Collider2D other) 
     {
-        if (other.gameObject.CompareTag("Portal"))
+        if (other.CompareTag("Portal"))
         {
             IsInPortal = false;
-            Debug.Log("Portaldan çıktı");
+            currentPortalData = null;
         }
     }
 
@@ -146,8 +134,5 @@ public class Player : MonoBehaviour
         }
     }
 
-    public Vector2 GetLastLookingPoint()
-    {
-        return movement;
-    }
+    public Vector2 GetLastLookingPoint() => movement;
 }
