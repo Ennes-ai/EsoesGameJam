@@ -414,9 +414,12 @@ public class LobbyUIS : MonoBehaviour
         Time.timeScale = 1f;
 
         // Sinematik başladığında kapanış müziğine geçiş yap
-        if (AudioManager.instance != null && AudioManager.instance.endingMusic != null)
+        if (AudioManager.instance != null)
         {
-            AudioManager.instance.PlayMusic(AudioManager.instance.endingMusic);
+            if (AudioManager.instance.endingMusic != null)
+                AudioManager.instance.PlayMusic(AudioManager.instance.endingMusic);
+            else
+                Debug.LogWarning("⚠️ Kapanış müziği çalınamadı! Çünkü AudioManager'da 'Ending Music' atanmamış. Lütfen MainMenu sahnesindeki AudioManager'a müziği atayıp Prefab'ı güncelleyin.");
         }
 
         // 1. Ekran yavaşça kararır
