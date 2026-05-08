@@ -1,9 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/_Project/ART/UI/Level-UI/LevelUss.uss?fileID=7433441132597879392&amp;guid=83e5b59da62e93c4485ebe444ac8b10a&amp;type=3#LevelUss"/>
-    
-    <!-- HUD Kapsayıcı (Oyun İçi Arayüz) -->
     <ui:VisualElement name="HUDContainer" class="hud-container">
-        <!-- Üst Kısım: Level Göstergesi ve Butonlar -->
         <ui:VisualElement class="hud-top-container">
             <ui:VisualElement name="LevelIndicator" class="hud-level-panel">
                 <ui:Label name="LevelText" text="L" class="hud-level-text"/>
@@ -13,12 +10,10 @@
                 <ui:Button name="ExitMenuButton" text="EXIT" class="hud-button"/>
             </ui:VisualElement>
         </ui:VisualElement>
-        <!-- Alt Kısım: Envanter -->
         <ui:VisualElement class="hud-bottom-container">
             <ui:VisualElement name="InventoryPanel" class="hud-inventory-panel"/>
         </ui:VisualElement>
     </ui:VisualElement>
-
     <ui:VisualElement name="PauseOverlay" class="pause-overlay pause-overlay--hidden"/>
     <ui:VisualElement name="PausePanel" class="pause-panel pause-panel--hidden">
         <ui:Label text="DURDURULDU" class="pause-title"/>
@@ -50,14 +45,10 @@
         </ui:ScrollView>
         <ui:Button text="K A P A T" name="CloseHowToPlay" picking-mode="Ignore" class="pause-button settings-close-button"/>
     </ui:VisualElement>
-    
-    <!-- EKRAN KARARTMA EFEKTİ (HUD VE MENÜLERİN ÜSTÜNDE, ENDING'İN ARKASINDA) -->
     <ui:VisualElement name="FadeOverlay" picking-mode="Ignore" class="fade-overlay fade-overlay--active"/>
-
-    <!-- OYUN SONU (ENDING) EKRANI -->
-    <ui:VisualElement name="EndingScreen" class="ending-screen ending-screen--hidden">
+    <ui:VisualElement name="EndingScreen" class="ending-screen ending-screen--hidden" style="visibility: visible; opacity: 0;">
         <ui:Label text="V I O L A T O R" class="ending-title"/>
-        <ui:Label text="Son&#10;oyunu bitirdin..." name="EndingMessage" class="ending-message ending-hidden-text"/>
+        <ui:Label text="Son&#10;oyunu bitirdin..." name="EndingMessage" class="ending-message ending-hidden-text" style="opacity: 0;"/>
         <ui:VisualElement name="EndingCredits" class="ending-credits-container ending-hidden-text">
             <ui:Label text="YAPIMCILAR" class="ending-credits-title"/>
             <ui:VisualElement class="ending-credits-row">
