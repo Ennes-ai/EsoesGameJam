@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5550756019140206965}
   - component: {fileID: 6552995862798014128}
   - component: {fileID: 3796140604150722823}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WallRedImmutable
   m_TagString: Environment
   m_Icon: {fileID: 0}

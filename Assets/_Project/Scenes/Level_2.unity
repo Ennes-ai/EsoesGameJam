@@ -844,6 +844,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1673134742}
     m_Modifications:
+    - target: {fileID: 2607346289230754131, guid: 93881361ab8008915846605d55ae8a84, type: 3}
+      propertyPath: data.dataString
+      value: UEsDBBQAAAgIAAAQIexhWoBhXQIAABEFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VE1z2jAQ/SuMzk2Hr4TQW+sQ0kMSJqSTiy/CWmMNsuTRR4Bk+O/dlW3s0OkJ8d7b3berlT+Z1K6CzBu7tFI8GgHsx4DRmX0bdOQDHPjW6LX8gFbzJoUvSMSj5oV7aRAfUZgzJXgrs596q0g8RDBomRtbLsQWEuO8QzjnygFS1niK1gh9DtgBf67mFHLE03hGpw88zYeDEx4z0B5sJ22FraxWBZ0pXlYgyHInvh436uubKNPYTKMg45lRSrrGCfPHKnaa8MoF7AMFQnLsLJYnfQFyW3hy2Q9+znMHvrFk+fFOWhxQnZX9MvXUSu52ta93rgLVuZlGS3XOx3/oq1Gkc2vKh7bsaEglfCGz3Qs/Ztz53lT78N1X30HvudrxjYK3AvSTWVoTtEDS20ChwcH4rvt77iwpINt1eG31AgzV/++GejjF5g+JkuWGqO/TGlgrE8cdbx4sXsxvNBz3wjUpECUXfxy88m1/gRriXlrnkWq61GRvY4IlKVvEmVE3wSfGaohwY7oCzZU/rjCNv7zBC65X9oK55/RUmuIN176Ai5AId/rh8IJamf35slxh9o/giufgldTQmSbiCeeUGK3rBevPpA1bB5vzrBe2DVJ8XS02moh8Nh5u5tf56HY6z67mm+lkPplMprP89mZ0O2Nx96TGPrla1Uab8eCt6S65xj1rvyCDpeVVXHZh+X4pP0rTG7nUuVlnFkA/1xnOxsFiEXyUYiEkDmgN3ksd75t9pkyZbAciPSdKY6eLg7c87bKkrJLvxhOSsiR+MlJG8HmXVxbeJeypeJvsxE5/AVBLAwQUAAAICAAAECHs9j4C0W0AAAB4AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9IzNNdRUEovSizIKAaKGII4pZkpIHa0kqFxSpq5kUGSpWmaoYWJZbKuZZKJsaWxsbGJeZqFmaGFuVIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAAECHsYVqAYV0CAAARBQAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAAECHs9j4C0W0AAAB4AAAACQAkAAAAAAAAAAAAAACqAgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAAGIDAAAAAA==
+      objectReference: {fileID: 0}
     - target: {fileID: 2986919941725157797, guid: 93881361ab8008915846605d55ae8a84, type: 3}
       propertyPath: m_Name
       value: A_Manager
@@ -117203,7 +117207,7 @@ GameObject:
   - component: {fileID: 1961955000}
   - component: {fileID: 1961954999}
   - component: {fileID: 1961954998}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ENEMY
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117499,7 +117503,7 @@ GameObject:
   - component: {fileID: 1979826035}
   - component: {fileID: 1979826034}
   - component: {fileID: 1979826033}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ENEMY (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

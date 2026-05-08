@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2340148790696096209}
   - component: {fileID: 560344607390481977}
   - component: {fileID: 8377077073044402902}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WallSideRed
   m_TagString: Environment
   m_Icon: {fileID: 0}
