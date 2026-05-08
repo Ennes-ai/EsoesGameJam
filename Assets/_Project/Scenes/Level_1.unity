@@ -12575,9 +12575,8 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &1018256261
 Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 3836634690088096460, guid: 36d4cd70de3aa8141ac43911a1e499c1, type: 3}
+  m_PrefabInstance: {fileID: 6553678734199770817}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1018256260}
   serializedVersion: 2
@@ -20154,7 +20153,7 @@ AudioSource:
   m_GameObject: {fileID: 1612754592}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -4216131254052459345, guid: b01d2321ad22a924fb11e76fdcc59e47, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -20251,7 +20250,7 @@ AudioSource:
   m_GameObject: {fileID: 1612754592}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 282454940490310891, guid: b01d2321ad22a924fb11e76fdcc59e47, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -20351,6 +20350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96fcc776ad00b4cce89137a05827ab9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  audioMixer: {fileID: 24100000, guid: b01d2321ad22a924fb11e76fdcc59e47, type: 2}
   musicSource: {fileID: 1612754595}
   sfxSource: {fileID: 1612754594}
   mainMenuMusic: {fileID: 8300000, guid: 1b46b05a54637dca2916ad1c348f5948, type: 3}
@@ -206247,9 +206247,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2096136578}
     m_Modifications:
+    - target: {fileID: 2340880533398984656, guid: 7507f3f9c3da2351fbcfa7c284a9afb1, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -7613537510832633737, guid: b66be66fb86ba3b35a056eaf4eac1cda, type: 3}
+    - target: {fileID: 2340880533398984656, guid: 7507f3f9c3da2351fbcfa7c284a9afb1, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2340880533398984656, guid: 7507f3f9c3da2351fbcfa7c284a9afb1, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2340880533398984656, guid: 7507f3f9c3da2351fbcfa7c284a9afb1, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4501800935960175642, guid: 7507f3f9c3da2351fbcfa7c284a9afb1, type: 3}
       propertyPath: m_Name
       value: PLAYER
+      objectReference: {fileID: 0}
+    - target: {fileID: 5906151871066498744, guid: 7507f3f9c3da2351fbcfa7c284a9afb1, type: 3}
+      propertyPath: m_Size.y
+      value: 1.4459585
+      objectReference: {fileID: 0}
+    - target: {fileID: 5906151871066498744, guid: 7507f3f9c3da2351fbcfa7c284a9afb1, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.00791496
       objectReference: {fileID: 0}
     - target: {fileID: 8259484042321702254, guid: 7507f3f9c3da2351fbcfa7c284a9afb1, type: 3}
       propertyPath: m_LocalPosition.x

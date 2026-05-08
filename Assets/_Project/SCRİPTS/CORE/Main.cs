@@ -9,9 +9,11 @@ public class Main : MonoBehaviour
     private UIDocument _uiDocument;
     private Button _playButton;
     private Button _creditsButton;
+    private Button _howToPlayButton;
     private Button _closeCreditsButton;
     private Button _settingsButton;
     private Button _closeSettingsButton;
+    private Button _closeHowToPlayButton;
     private Button _exitButton;
     private VisualElement _fadeOverlay;
     private VisualElement _loadingScreen;
@@ -19,6 +21,7 @@ public class Main : MonoBehaviour
     private VisualElement _buttonsContainer;
     private VisualElement _creditsPanel;
     private VisualElement _settingsPanel;
+    private VisualElement _howToPlayPanel;
     private Slider _musicSlider;
     private Slider _sfxSlider;
 
@@ -36,11 +39,14 @@ public class Main : MonoBehaviour
         _exitButton = root.Q<Button>("Exit");
         _creditsButton = root.Q<Button>("Yapimcilar");
         _settingsButton = root.Q<Button>("Ayarlar");
+        _howToPlayButton = root.Q<Button>("NasilOynanir");
         _closeCreditsButton = root.Q<Button>("CloseCredits");
         _closeSettingsButton = root.Q<Button>("CloseSettings");
+        _closeHowToPlayButton = root.Q<Button>("CloseHowToPlay");
         
         _creditsPanel = root.Q<VisualElement>("CreditsPanel");
         _settingsPanel = root.Q<VisualElement>("SettingsPanel");
+        _howToPlayPanel = root.Q<VisualElement>("HowToPlayPanel");
         _musicSlider = root.Q<Slider>("MusicSlider");
         _sfxSlider = root.Q<Slider>("SfxSlider");
 
@@ -66,12 +72,41 @@ public class Main : MonoBehaviour
         if (_settingsButton != null) _settingsButton.clicked += OnSettingsButtonClicked;
         if (_closeSettingsButton != null) _closeSettingsButton.clicked += OnCloseSettingsButtonClicked;
         
+        if (_howToPlayButton != null) _howToPlayButton.clicked += OnHowToPlayButtonClicked;
+        else Debug.LogWarning("⚠️ Ana Menü UI: 'NasilOynanir' isminde bir buton bulunamadı! UI Builder'ı açıp adını tam olarak böyle yaptığından emin ol.");
+
+        if (_closeHowToPlayButton != null) _closeHowToPlayButton.clicked += OnCloseHowToPlayButtonClicked;
+        
         // Slider değiştiğinde eşzamanlı ses değiştirme tetikleyicisi
-        if (_musicSlider != null) _musicSlider.RegisterValueChangedCallback(evt => OnMusicVolumeChanged(evt.newValue));
-        if (_sfxSlider != null) _sfxSlider.RegisterValueChangedCallback(evt => OnSfxVolumeChanged(evt.newValue));
+        if (_musicSlider != null) 
+        {
+            _musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 100f);
+            _musicSlider.RegisterValueChangedCallback(evt => OnMusicVolumeChanged(evt.newValue));
+        }
+        if (_sfxSlider != null) 
+        {
+            _sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 100f);
+            _sfxSlider.RegisterValueChangedCallback(evt => OnSfxVolumeChanged(evt.newValue));
+        }
 
         // Sahne başlarken karanlıktan aydınlanma animasyonunu (Fade In) başlat
         StartCoroutine(FadeInRoutine());
+
+        // Tüm butonlara Hover ve Tıklama sesi ekle
+        BindButtonSounds(_playButton);
+        BindButtonSounds(_exitButton);
+        BindButtonSounds(_creditsButton);
+        BindButtonSounds(_closeCreditsButton);
+        BindButtonSounds(_settingsButton);
+        BindButtonSounds(_closeSettingsButton);
+        BindButtonSounds(_howToPlayButton);
+        BindButtonSounds(_closeHowToPlayButton);
+
+        // Main Menu müziğinin çalmasını sağla
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.CheckAndPlayMusic("MainMenu");
+        }
     }
 
     private IEnumerator FadeInRoutine()
@@ -79,6 +114,18 @@ public class Main : MonoBehaviour
         // UI Toolkit'in ilk karede siyah ekranı tam olarak çizip, CSS stillerini hesaplaması için kısa bir bekleme ekliyoruz.
         yield return new WaitForSecondsRealtime(0.15f);
         if (_fadeOverlay != null) _fadeOverlay.RemoveFromClassList("fade-overlay--active");
+    }
+
+    private void BindButtonSounds(Button btn)
+    {
+        if (btn == null) return;
+        
+        btn.RegisterCallback<PointerEnterEvent>(evt => {
+            if (AudioManager.instance != null) AudioManager.instance.PlaySFX(AudioManager.instance.hover);
+        });
+        btn.clicked += () => {
+            if (AudioManager.instance != null) AudioManager.instance.PlaySFX(AudioManager.instance.tiklamaSesi);
+        };
     }
 
     private void OnDisable()
@@ -92,6 +139,8 @@ public class Main : MonoBehaviour
         
         if (_settingsButton != null) _settingsButton.clicked -= OnSettingsButtonClicked;
         if (_closeSettingsButton != null) _closeSettingsButton.clicked -= OnCloseSettingsButtonClicked;
+        if (_howToPlayButton != null) _howToPlayButton.clicked -= OnHowToPlayButtonClicked;
+        if (_closeHowToPlayButton != null) _closeHowToPlayButton.clicked -= OnCloseHowToPlayButtonClicked;
     }
 
     private void OnPlayButtonClicked()
@@ -169,7 +218,6 @@ public class Main : MonoBehaviour
             _creditsPanel.RemoveFromClassList("credits-panel--hidden");
         }
         if (_closeCreditsButton != null) _closeCreditsButton.pickingMode = PickingMode.Position; // Tıklanabilir yap
-        AudioManager.instance?.PlaySFX(AudioManager.instance.tiklamaSesi); // İsteğe bağlı, varsa tıklama sesi çalar
     }
 
     private void OnCloseCreditsButtonClicked()
@@ -180,7 +228,6 @@ public class Main : MonoBehaviour
             _creditsPanel.AddToClassList("credits-panel--hidden");
         }
         if (_closeCreditsButton != null) _closeCreditsButton.pickingMode = PickingMode.Ignore; // Tekrar tıklanamaz yap
-        AudioManager.instance?.PlaySFX(AudioManager.instance.tiklamaSesi); // İsteğe bağlı
     }
 
     private void OnSettingsButtonClicked()
@@ -191,7 +238,6 @@ public class Main : MonoBehaviour
             _settingsPanel.RemoveFromClassList("settings-panel--hidden");
         }
         if (_closeSettingsButton != null) _closeSettingsButton.pickingMode = PickingMode.Position; // Tıklanabilir yap
-        AudioManager.instance?.PlaySFX(AudioManager.instance.tiklamaSesi);
     }
 
     private void OnCloseSettingsButtonClicked()
@@ -202,24 +248,43 @@ public class Main : MonoBehaviour
             _settingsPanel.AddToClassList("settings-panel--hidden");
         }
         if (_closeSettingsButton != null) _closeSettingsButton.pickingMode = PickingMode.Ignore; // Tekrar tıklanamaz yap
-        AudioManager.instance?.PlaySFX(AudioManager.instance.tiklamaSesi);
+    }
+
+    private void OnHowToPlayButtonClicked()
+    {
+        if (_howToPlayPanel != null)
+        {
+            _howToPlayPanel.RemoveFromClassList("settings-panel--hidden");
+            _howToPlayPanel.pickingMode = PickingMode.Position;
+        }
+        if (_closeHowToPlayButton != null) _closeHowToPlayButton.pickingMode = PickingMode.Position;
+    }
+
+    private void OnCloseHowToPlayButtonClicked()
+    {
+        if (_howToPlayPanel != null)
+        {
+            _howToPlayPanel.AddToClassList("settings-panel--hidden");
+            _howToPlayPanel.pickingMode = PickingMode.Ignore;
+        }
+        if (_closeHowToPlayButton != null) _closeHowToPlayButton.pickingMode = PickingMode.Ignore;
     }
 
     private void OnMusicVolumeChanged(float value)
     {
-        // AudioManager bulunduysa Müzik sesini slider değerine göre (0.0 - 1.0 arası) ayarlar
-        if (AudioManager.instance != null && AudioManager.instance.musicSource != null)
+        // AudioManager bulunduysa Müzik sesini ayarlar
+        if (AudioManager.instance != null)
         {
-            AudioManager.instance.musicSource.volume = value / 100f;
+            AudioManager.instance.SetMusicVolume(value);
         }
     }
 
     private void OnSfxVolumeChanged(float value)
     {
-        // AudioManager bulunduysa Efekt sesini slider değerine göre ayarlar
-        if (AudioManager.instance != null && AudioManager.instance.sfxSource != null)
+        // AudioManager bulunduysa Efekt sesini ayarlar
+        if (AudioManager.instance != null)
         {
-            AudioManager.instance.sfxSource.volume = value / 100f;
+            AudioManager.instance.SetSFXVolume(value);
         }
     }
 

@@ -21,9 +21,9 @@ public class CollectibleItem : MonoBehaviour
         // Oyuncu yakındayken E'ye basarsa
         if (_isPlayerNear && Input.GetKeyDown(KeyCode.E) && IsCollectible && _playerEnvanter != null)
         {
-            if (_playerEnvanter.HasItem(itemType))
+            if (!_playerEnvanter.CanAddItem(itemType))
             {
-                Debug.Log("Zaten bu eşyaya sahipsin!");
+                Debug.Log("Envanter tam dolu veya bu eşyadan maksimum sayıya (3) ulaştın!");
                 return;
             }
             else

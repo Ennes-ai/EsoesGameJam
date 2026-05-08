@@ -5,6 +5,7 @@
         <ui:VisualElement name="Buttons" class="buttons-container">
             <ui:Button text="O Y N A" name="Play" class="button"/>
             <ui:Button text="A Y A R L A R" name="Ayarlar" class="button"/>
+            <ui:Button text="N A S I L  O Y N A N I R" name="NasilOynanir" class="button"/>
             <ui:Button text="Y A P I M C I L A R" name="Yapimcilar" class="button"/>
             <ui:Button text="Ç I K I S" name="Exit" class="button"/>
         </ui:VisualElement>
@@ -31,6 +32,13 @@
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:Button text="K A P A T" name="CloseSettings" picking-mode="Ignore" class="button settings-close-button"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="HowToPlayPanel" picking-mode="Ignore" class="settings-panel settings-panel--hidden" style="width: 70%; height: 75%; max-width: 900px; position: absolute; top: 50%; left: 50%; translate: -50% -50%;">
+            <ui:Label text="NASIL OYNANIR" class="settings-title"/>
+            <ui:ScrollView class="settings-content-container" style="flex-grow: 1; padding: 10px;">
+                <ui:Label text="• E tuşu ile etraftaki eşyaları (Su, Taş, Duvar vb.) toplayabilirsin.&#10;• Birbirinden farklı en fazla 3 eşya türü, her türden ise en fazla 3 adet taşıyabilirsin.&#10;• 1, 2 ve 3 tuşlarıyla envanterinden eşya seçip, SPACE tuşu ile fırlatabilirsin.&#10;• Fırlattığın eşya başka bir objeye çarparsa, onu kendi türüne dönüştürür. Levelleri bu mekanikle geçmelisin!&#10;• Taşları yanlarına gidip ittirerek istediğin yere sürükleyebilirsin.&#10;• Portalları aktifleştirmek için bulmacaları çözmeli, ardından portala yaklaşıp E tuşuna basmalısın.&#10;• Lobi alanında bir sonraki levele geçebilmek için, önceki levelleri tamamlamış olman gerekir." style="white-space: normal; color: rgb(255, 255, 255); font-size: 16px;"/>
+            </ui:ScrollView>
+            <ui:Button text="K A P A T" name="CloseHowToPlay" picking-mode="Ignore" class="button settings-close-button"/>
         </ui:VisualElement>
         <ui:VisualElement name="LoadingScreen" class="loading-screen">
             <ui:VisualElement class="loading-bar-container">

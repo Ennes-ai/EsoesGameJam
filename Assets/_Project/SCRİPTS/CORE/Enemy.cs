@@ -20,10 +20,15 @@ public class Enemy : MonoBehaviour
     private Path path;
     private int currentWaypoint = 0;
 
+    private Animator animator;
+    private string currentAnimState = "Idle";
+    private Vector2 movementDir = Vector2.zero;
+
     void Start()
     {
         seeker = gameObject.GetComponent<Seeker>();
         rb2d = gameObject.GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -31,13 +36,18 @@ public class Enemy : MonoBehaviour
         switch (currentState)
         {
             case GuardState.Idle:
+                movementDir = Vector2.zero;
                 FindTarget();
                 break;
             case GuardState.CalculatingPath:
+                movementDir = Vector2.zero;
                 break;
             case GuardState.Reverting:
+                movementDir = Vector2.zero;
                 break;
         }
+        
+        UpdateAnimations();
     }
 
     void FixedUpdate()
@@ -45,6 +55,41 @@ public class Enemy : MonoBehaviour
         if(currentState == GuardState.Moving)
         {
             MoveAlongPath();
+        }
+    }
+
+    private void UpdateAnimations()
+    {
+        if (animator == null) return;
+
+        string newState = "Idle";
+
+        // Player'daki gibi Yön önceliğini belirliyoruz, Yukarı ve Aşağı animasyonları ters tetikleniyor
+        if (movementDir.x > 0.01f) newState = "Right_Walk";
+        else if (movementDir.x < -0.01f) newState = "Left_Walk";
+        else if (movementDir.y > 0.01f) newState = "Down_Walk"; // Yukarıya (y>0) giderken Down_Walk tetikleniyor
+        else if (movementDir.y < -0.01f) newState = "Up_Walk";  // Aşağıya (y<0) giderken Up_Walk tetikleniyor
+
+        if (newState == "Idle")
+        {
+            // Hedefe ulaştığında veya durduğunda animasyonu son karesinde dondur
+            animator.speed = 0f;
+        }
+        else
+        {
+            animator.speed = 1f; // Hareket varken normal hızında oynat
+
+            // Sadece yön değiştiğinde yeni trigger'ı tetikle
+            if (newState != currentAnimState)
+            {
+                animator.ResetTrigger("Right_Walk");
+                animator.ResetTrigger("Left_Walk");
+                animator.ResetTrigger("Up_Walk");
+                animator.ResetTrigger("Down_Walk");
+
+                animator.SetTrigger(newState);
+                currentAnimState = newState;
+            }
         }
     }
 
@@ -112,6 +157,7 @@ public class Enemy : MonoBehaviour
         }
 
         Vector2 targetPosition = path.vectorPath[currentWaypoint];
+        movementDir = (targetPosition - (Vector2)transform.position).normalized;
         Vector2 newPosition = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
 
         rb2d.MovePosition(newPosition);

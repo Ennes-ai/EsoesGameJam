@@ -10,10 +10,13 @@ public class LobbyUIS : MonoBehaviour
     private VisualElement _pauseOverlay;
     private Button _resumeButton;
     private Button _settingsButton;
+    private Button _howToPlayButton;
     private Button _mainMenuButton;
     
     private VisualElement _settingsPanel;
+    private VisualElement _howToPlayPanel;
     private Button _closeSettingsButton;
+    private Button _closeHowToPlayButton;
     private Slider _musicSlider;
     private Slider _sfxSlider;
     private VisualElement _fadeOverlay;
@@ -23,6 +26,8 @@ public class LobbyUIS : MonoBehaviour
     private Button _hudRestartButton;
     private Button _hudExitButton;
     private int _lastInventoryCount = -1;
+    private int _lastTotalItems = -1;
+    private ItemType _lastSelectedItem = null;
 
     private VisualElement _endingScreen;
     private Label _endingMessage;
@@ -42,15 +47,23 @@ public class LobbyUIS : MonoBehaviour
         _pauseOverlay = root.Q<VisualElement>("PauseOverlay");
         _resumeButton = root.Q<Button>("ResumeButton");
         _settingsButton = root.Q<Button>("SettingsButton");
+        _howToPlayButton = root.Q<Button>("HowToPlayButton");
         _mainMenuButton = root.Q<Button>("MainMenuButton");
 
         // Butonlara tıklama olaylarını bağlıyoruz
         if (_resumeButton != null) _resumeButton.clicked += TogglePause;
         if (_mainMenuButton != null) _mainMenuButton.clicked += OnMainMenuButtonClicked;
+        
+        if (_howToPlayButton != null) _howToPlayButton.clicked += OnHowToPlayButtonClicked;
+        else Debug.LogWarning("⚠️ LOBBY UI: 'HowToPlayButton' isminde bir buton bulunamadı! UI Builder'ı açıp adını tam olarak böyle yaptığından emin ol.");
 
         // Ayarlar menüsü elemanlarını UXML'den alıyoruz
         _settingsPanel = root.Q<VisualElement>("SettingsPanel");
+        _howToPlayPanel = root.Q<VisualElement>("HowToPlayPanel");
+        
         _closeSettingsButton = root.Q<Button>("CloseSettings");
+        _closeHowToPlayButton = root.Q<Button>("CloseHowToPlay");
+        
         _musicSlider = root.Q<Slider>("MusicSlider");
         _sfxSlider = root.Q<Slider>("SfxSlider");
         
@@ -59,10 +72,28 @@ public class LobbyUIS : MonoBehaviour
 
         if (_settingsButton != null) _settingsButton.clicked += OnSettingsButtonClicked;
         if (_closeSettingsButton != null) _closeSettingsButton.clicked += OnCloseSettingsButtonClicked;
+        if (_closeHowToPlayButton != null) _closeHowToPlayButton.clicked += OnCloseHowToPlayButtonClicked;
         
         // Slider değiştiğinde eşzamanlı ses değiştirme tetikleyicisi
-        if (_musicSlider != null) _musicSlider.RegisterValueChangedCallback(evt => OnMusicVolumeChanged(evt.newValue));
-        if (_sfxSlider != null) _sfxSlider.RegisterValueChangedCallback(evt => OnSfxVolumeChanged(evt.newValue));
+        if (_musicSlider != null) 
+        {
+            _musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 100f);
+            _musicSlider.RegisterValueChangedCallback(evt => OnMusicVolumeChanged(evt.newValue));
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ LOBBY UI: 'MusicSlider' isminde bir Slider bulunamadı! UI Builder'dan (Pause Menüsü) adını tam olarak 'MusicSlider' yaptığından emin ol.");
+        }
+        
+        if (_sfxSlider != null) 
+        {
+            _sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 100f);
+            _sfxSlider.RegisterValueChangedCallback(evt => OnSfxVolumeChanged(evt.newValue));
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ LOBBY UI: 'SfxSlider' isminde bir Slider bulunamadı! UI Builder'dan (Pause Menüsü) adını tam olarak 'SfxSlider' yaptığından emin ol.");
+        }
         
         // Oyun Sonu (Ending) Elemanları
         _endingScreen = root.Q<VisualElement>("EndingScreen");
@@ -82,6 +113,15 @@ public class LobbyUIS : MonoBehaviour
 
         // Sahne başlarken karanlıktan aydınlanma animasyonunu (Fade In) başlat
         StartCoroutine(FadeInRoutine());
+
+        BindButtonSounds(_resumeButton);
+        BindButtonSounds(_settingsButton);
+        BindButtonSounds(_mainMenuButton);
+        BindButtonSounds(_closeSettingsButton);
+        BindButtonSounds(_howToPlayButton);
+        BindButtonSounds(_closeHowToPlayButton);
+        BindButtonSounds(_hudRestartButton);
+        BindButtonSounds(_hudExitButton);
     }
 
     private IEnumerator FadeInRoutine()
@@ -92,12 +132,26 @@ public class LobbyUIS : MonoBehaviour
         if (_fadeOverlay != null) _fadeOverlay.RemoveFromClassList("fade-overlay--active");
     }
 
+    private void BindButtonSounds(Button btn)
+    {
+        if (btn == null) return;
+        
+        btn.RegisterCallback<PointerEnterEvent>(evt => {
+            if (AudioManager.instance != null) AudioManager.instance.PlaySFX(AudioManager.instance.hover);
+        });
+        btn.clicked += () => {
+            if (AudioManager.instance != null) AudioManager.instance.PlaySFX(AudioManager.instance.tiklamaSesi);
+        };
+    }
+
     private void OnDisable()
     {
         // Bellek sızıntılarını önlemek için eventleri kaldırıyoruz
         if (_resumeButton != null) _resumeButton.clicked -= TogglePause;
         if (_settingsButton != null) _settingsButton.clicked -= OnSettingsButtonClicked;
+        if (_howToPlayButton != null) _howToPlayButton.clicked -= OnHowToPlayButtonClicked;
         if (_closeSettingsButton != null) _closeSettingsButton.clicked -= OnCloseSettingsButtonClicked;
+        if (_closeHowToPlayButton != null) _closeHowToPlayButton.clicked -= OnCloseHowToPlayButtonClicked;
         if (_mainMenuButton != null) _mainMenuButton.clicked -= OnMainMenuButtonClicked;
 
         if (_hudRestartButton != null) _hudRestartButton.clicked -= OnRestartButtonClicked;
@@ -123,7 +177,7 @@ public class LobbyUIS : MonoBehaviour
         {
             case "Lobby": _levelText.text = "L"; break;
             case "Level_0": _levelText.text = "L0"; break;
-            case "SampleScene": _levelText.text = "L1"; break;
+            case "Level_1": _levelText.text = "L1"; break;
             case "Level_2": _levelText.text = "L2"; break;
             case "Level_3": _levelText.text = "L3"; break;
             case "Level_4": _levelText.text = "L4"; break;
@@ -135,14 +189,24 @@ public class LobbyUIS : MonoBehaviour
     {
         if (_inventoryPanel == null) return;
 
-        // PlayerEnvanter.Instance yoksa veya liste null ise sayıyı 0 kabul et
-        int currentCount = (PlayerEnvanter.Instance != null && PlayerEnvanter.Instance.collectedItems != null) 
-            ? PlayerEnvanter.Instance.collectedItems.Count 
+        int currentCount = (PlayerEnvanter.Instance != null && PlayerEnvanter.Instance.inventorySlots != null) 
+            ? PlayerEnvanter.Instance.inventorySlots.Count 
             : 0;
+            
+        int totalItems = 0;
+        if (currentCount > 0)
+        {
+            foreach (var slot in PlayerEnvanter.Instance.inventorySlots) totalItems += slot.count;
+        }
 
-        if (currentCount != _lastInventoryCount)
+        ItemType currentItem = (PlayerEnvanter.Instance != null) ? PlayerEnvanter.Instance.currentItem : null;
+
+        // İtem slotu sayısı, toplam eşya stack sayısı VEYA seçili eşya değiştiğinde UI'ı yenile
+        if (currentCount != _lastInventoryCount || totalItems != _lastTotalItems || currentItem != _lastSelectedItem)
         {
             _lastInventoryCount = currentCount;
+            _lastTotalItems = totalItems;
+            _lastSelectedItem = currentItem;
             _inventoryPanel.Clear(); // Önceki UI itemlerini temizle
 
             if (currentCount == 0)
@@ -153,11 +217,51 @@ public class LobbyUIS : MonoBehaviour
             {
                 _inventoryPanel.style.display = DisplayStyle.Flex; // İtem varsa paneli göster
 
-                foreach (var item in PlayerEnvanter.Instance.collectedItems)
+                int index = 1;
+                foreach (var slot in PlayerEnvanter.Instance.inventorySlots)
                 {
                     VisualElement itemUI = new VisualElement();
                     itemUI.AddToClassList("hud-inventory-item");
+                    
+                    // Eğer ScriptableObject'te sprite tanımlıysa arkaplan olarak ata
+                    if (slot.itemType.itemSprite != null)
+                    {
+                        itemUI.style.backgroundImage = new StyleBackground(slot.itemType.itemSprite);
+                    }
+
+                    // İlgili eşyanın seçili olduğunu gösteren sarı çizgi efekti
+                    if (slot.itemType == currentItem)
+                    {
+                        itemUI.style.borderBottomColor = Color.yellow;
+                        itemUI.style.borderBottomWidth = 3;
+                    }
+
+                    // Sol üst köşede hangi tuş olduğunu belirten Label (1, 2, 3...)
+                    Label keyLabel = new Label(index.ToString());
+                    keyLabel.style.position = Position.Absolute;
+                    keyLabel.style.top = 2; // Sol yukarıya hizalama
+                    keyLabel.style.left = 4;
+                    keyLabel.style.color = Color.white;
+                    keyLabel.style.fontSize = 18;
+                    keyLabel.style.unityFontStyleAndWeight = FontStyle.Bold;
+
+                    itemUI.Add(keyLabel);
+
+                    // Eğer 1'den fazla aynı eşyadan varsa sağ üstte sayısını (Stack) göster
+                    if (slot.count > 1)
+                    {
+                        Label stackLabel = new Label("x" + slot.count.ToString());
+                        stackLabel.style.position = Position.Absolute;
+                        stackLabel.style.top = 2; // Sağ yukarıya hizalama
+                        stackLabel.style.right = 4;
+                        stackLabel.style.color = Color.yellow;
+                        stackLabel.style.fontSize = 16;
+                        stackLabel.style.unityFontStyleAndWeight = FontStyle.Bold;
+                        itemUI.Add(stackLabel);
+                    }
+
                     _inventoryPanel.Add(itemUI);
+                    index++;
                 }
             }
         }
@@ -186,37 +290,61 @@ public class LobbyUIS : MonoBehaviour
     {
         if (_settingsPanel != null) _settingsPanel.RemoveFromClassList("settings-panel--hidden");
         if (_closeSettingsButton != null) _closeSettingsButton.pickingMode = PickingMode.Position;
-        AudioManager.instance?.PlaySFX(AudioManager.instance.tiklamaSesi);
     }
 
     private void OnCloseSettingsButtonClicked()
     {
         if (_settingsPanel != null) _settingsPanel.AddToClassList("settings-panel--hidden");
         if (_closeSettingsButton != null) _closeSettingsButton.pickingMode = PickingMode.Ignore;
-        AudioManager.instance?.PlaySFX(AudioManager.instance.tiklamaSesi);
+    }
+
+    private void OnHowToPlayButtonClicked()
+    {
+        if (_howToPlayPanel != null) 
+        {
+            _howToPlayPanel.RemoveFromClassList("settings-panel--hidden");
+            _howToPlayPanel.pickingMode = PickingMode.Position;
+        }
+        if (_closeHowToPlayButton != null) _closeHowToPlayButton.pickingMode = PickingMode.Position;
+    }
+
+    private void OnCloseHowToPlayButtonClicked()
+    {
+        if (_howToPlayPanel != null) 
+        {
+            _howToPlayPanel.AddToClassList("settings-panel--hidden");
+            _howToPlayPanel.pickingMode = PickingMode.Ignore;
+        }
+        if (_closeHowToPlayButton != null) _closeHowToPlayButton.pickingMode = PickingMode.Ignore;
     }
 
     private void OnMusicVolumeChanged(float value)
     {
-        if (AudioManager.instance != null && AudioManager.instance.musicSource != null)
-            AudioManager.instance.musicSource.volume = value / 100f;
+        Debug.Log("Lobby UI Müzik Değişiyor: " + value);
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.SetMusicVolume(value);
+        }
+        else Debug.LogWarning("⚠️ LOBBY UI: Sahnede AudioManager bulunamadı!");
     }
 
     private void OnSfxVolumeChanged(float value)
     {
-        if (AudioManager.instance != null && AudioManager.instance.sfxSource != null)
-            AudioManager.instance.sfxSource.volume = value / 100f;
+        Debug.Log("Lobby UI SFX Değişiyor: " + value);
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.SetSFXVolume(value);
+        }
+        else Debug.LogWarning("⚠️ LOBBY UI: Sahnede AudioManager bulunamadı!");
     }
 
     private void OnMainMenuButtonClicked()
     {
-        AudioManager.instance?.PlaySFX(AudioManager.instance.tiklamaSesi);
         StartCoroutine(FadeOutAndLoadMenu());
     }
 
     private void OnRestartButtonClicked()
     {
-        AudioManager.instance?.PlaySFX(AudioManager.instance.tiklamaSesi);
         StartCoroutine(FadeOutAndReloadScene());
     }
 
