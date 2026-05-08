@@ -15,6 +15,9 @@ public class Player : MonoBehaviour
     private string portalName;
     private bool _isTransitioning = false; // Portala girerken spamlama olmasın diye kontrol değişkeni
 
+    private Animator animator;
+    private string currentAnimState = "Idle";
+
     public bool IsCanGoLobby = false;
 
     private Portals currentPortalData;
@@ -27,6 +30,7 @@ public class Player : MonoBehaviour
         rb.interpolation = RigidbodyInterpolation2D.Interpolate;
         
         playerEnvanter = GetComponent<PlayerEnvanter>();
+        animator = GetComponent<Animator>();
 
         if (!PlayerPrefs.HasKey("ReachedLevel"))  // oyun ilk defa aciliyorsa otomatik 0. level acik olsun
         {
@@ -43,6 +47,8 @@ public class Player : MonoBehaviour
         // Çapraz giderken hızlanmayı önlemek için vektörü normalize ediyoruz
         movement = movement.normalized;
 
+        UpdateAnimations();
+
         if (Input.GetKeyDown(KeyCode.T))
         {
             playerEnvanter.UseTheItem();
@@ -56,6 +62,42 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             IsCanGoLobby = true;
+        }
+    }
+
+    private void UpdateAnimations()
+    {
+        if (animator == null) return;
+
+        string newState = "Idle";
+
+        // Yön önceliğini belirliyoruz (Önce yatay, sonra dikey)
+        if (movement.x > 0) newState = "Right_Walk";
+        else if (movement.x < 0) newState = "Left_Walk";
+        else if (movement.y > 0) newState = "Down_Walk"; // W tuşu (yukarı) -> Down_Walk tetiklesin
+        else if (movement.y < 0) newState = "Up_Walk";   // S tuşu (aşağı) -> Up_Walk tetiklesin
+
+        if (newState == "Idle")
+        {
+            // Tuşu bıraktığımızda animasyon hızını 0 yaparak son karede donduruyoruz
+            animator.speed = 0f;
+        }
+        else
+        {
+            // Hareket varken animasyonu normal hızında (1) oynat
+            animator.speed = 1f;
+
+            // Sadece yön değiştiğinde yeni trigger'ı tetikle
+            if (newState != currentAnimState)
+            {
+                animator.ResetTrigger("Right_Walk");
+                animator.ResetTrigger("Left_Walk");
+                animator.ResetTrigger("Up_Walk");
+                animator.ResetTrigger("Down_Walk");
+
+                animator.SetTrigger(newState);
+                currentAnimState = newState;
+            }
         }
     }
 
@@ -84,7 +126,7 @@ public class Player : MonoBehaviour
         bool canEnter = false;
 
         if (targetLevel == "Level_0") canEnter = true; // Level_0 her zaman açık
-        else if (targetLevel == "SampleScene" && reachedLevel >= 1) canEnter = true; // Level 1 (SampleScene)
+        else if (targetLevel == "Level_1" && reachedLevel >= 1) canEnter = true; // Level 1
         else if (targetLevel == "Level_2" && reachedLevel >= 2) canEnter = true;
         else if (targetLevel == "Level_3" && reachedLevel >= 3) canEnter = true;
         else if (targetLevel == "Level_4" && reachedLevel >= 4) canEnter = true;

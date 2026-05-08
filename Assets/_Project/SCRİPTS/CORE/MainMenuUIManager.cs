@@ -9,6 +9,14 @@ public class MainMenuUIManager : MonoBehaviour
     private UIDocument _uiDocument;
     private Button _playButton;
     private Button _exitButton;
+    private Button _settingsButton;
+    private Button _howToPlayButton;
+    private Button _closeSettingsButton;
+    private Button _closeHowToPlayButton;
+    private VisualElement _settingsPanel;
+    private VisualElement _howToPlayPanel;
+    private Slider _musicSlider;
+    private Slider _sfxSlider;
     private VisualElement _fadeOverlay;
 
     private void OnEnable()
@@ -23,6 +31,13 @@ public class MainMenuUIManager : MonoBehaviour
         // Şimdilik "PlayButton" ve "ExitButton" olarak farz ediyorum.
         _playButton = root.Q<Button>("Play");
         _exitButton = root.Q<Button>("Exit");
+        _settingsButton = root.Q<Button>("Ayarlar");
+        _howToPlayButton = root.Q<Button>("NasilOynanir");
+        _closeSettingsButton = root.Q<Button>("CloseSettings");
+        _closeHowToPlayButton = root.Q<Button>("CloseHowToPlay");
+        
+        _settingsPanel = root.Q<VisualElement>("SettingsPanel");
+        _howToPlayPanel = root.Q<VisualElement>("HowToPlayPanel");
 
         // Siyah kararma ekranını buluyoruz
         _fadeOverlay = root.Q<VisualElement>("FadeOverlay");
@@ -33,6 +48,11 @@ public class MainMenuUIManager : MonoBehaviour
 
         if (_exitButton != null) _exitButton.clicked += OnExitButtonClicked;
         else Debug.LogWarning("Exit butonunun ismini UI Builder'da 'ExitButton' yaptığından emin ol!");
+        
+        if (_settingsButton != null) _settingsButton.clicked += OnSettingsButtonClicked;
+        if (_closeSettingsButton != null) _closeSettingsButton.clicked += OnCloseSettingsButtonClicked;
+        if (_howToPlayButton != null) _howToPlayButton.clicked += OnHowToPlayButtonClicked;
+        if (_closeHowToPlayButton != null) _closeHowToPlayButton.clicked += OnCloseHowToPlayButtonClicked;
     }
 
     private void OnDisable()
@@ -40,6 +60,58 @@ public class MainMenuUIManager : MonoBehaviour
         // Script kapanırken veya obje yok olurken event aboneliklerini kaldırmak bellek yönetimi için iyi bir pratiktir.
         if (_playButton != null) _playButton.clicked -= OnPlayButtonClicked;
         if (_exitButton != null) _exitButton.clicked -= OnExitButtonClicked;
+        if (_settingsButton != null) _settingsButton.clicked -= OnSettingsButtonClicked;
+        if (_closeSettingsButton != null) _closeSettingsButton.clicked -= OnCloseSettingsButtonClicked;
+        if (_howToPlayButton != null) _howToPlayButton.clicked -= OnHowToPlayButtonClicked;
+        if (_closeHowToPlayButton != null) _closeHowToPlayButton.clicked -= OnCloseHowToPlayButtonClicked;
+    }
+
+    private void OnSettingsButtonClicked()
+    {
+        if (_settingsPanel != null) _settingsPanel.RemoveFromClassList("settings-panel--hidden");
+        if (_closeSettingsButton != null) _closeSettingsButton.pickingMode = PickingMode.Position;
+    }
+
+    private void OnCloseSettingsButtonClicked()
+    {
+        if (_settingsPanel != null) _settingsPanel.AddToClassList("settings-panel--hidden");
+        if (_closeSettingsButton != null) _closeSettingsButton.pickingMode = PickingMode.Ignore;
+    }
+
+    private void OnHowToPlayButtonClicked()
+    {
+        if (_howToPlayPanel != null)
+        {
+            _howToPlayPanel.RemoveFromClassList("settings-panel--hidden");
+            _howToPlayPanel.pickingMode = PickingMode.Position;
+        }
+        if (_closeHowToPlayButton != null) _closeHowToPlayButton.pickingMode = PickingMode.Position;
+    }
+
+    private void OnCloseHowToPlayButtonClicked()
+    {
+        if (_howToPlayPanel != null)
+        {
+            _howToPlayPanel.AddToClassList("settings-panel--hidden");
+            _howToPlayPanel.pickingMode = PickingMode.Ignore;
+        }
+        if (_closeHowToPlayButton != null) _closeHowToPlayButton.pickingMode = PickingMode.Ignore;
+    }
+
+    private void OnMusicVolumeChanged(float value)
+    {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.SetMusicVolume(value);
+        }
+    }
+
+    private void OnSfxVolumeChanged(float value)
+    {
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.SetSFXVolume(value);
+        }
     }
 
     private void OnPlayButtonClicked()

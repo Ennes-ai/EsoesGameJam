@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 5906151871066498744}
   - component: {fileID: 8104461942356027324}
   - component: {fileID: 7400216990795249901}
+  - component: {fileID: -8724746946738021697}
   m_Layer: 0
   m_Name: PLAYER
   m_TagString: Player
@@ -236,3 +237,25 @@ MonoBehaviour:
   itemToThrowPrefab: {fileID: 2980811717850689542, guid: 465a1bd7bb538b809975dbbed425c191, type: 3}
   currentInventoryItemType: {fileID: 0}
   player: {fileID: 0}
+--- !u!95 &-8724746946738021697
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4501800935960175642}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 91484eb7611fcfd43afc7ea6274e3f8f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
