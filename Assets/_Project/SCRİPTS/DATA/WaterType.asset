@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 831606709b401924998294c5de0b78f6, type: 3}
-  m_Name: StoneType
+  m_Name: WaterType
   m_EditorClassIdentifier: Assembly-CSharp::ItemType
-  category: 1
-  itemSprite: {fileID: 2820131925045074649, guid: 63757f04ee4ea9cb0b4fdfbd77ab28cd, type: 3}
+  category: 3
+  itemSprite: {fileID: 4545556684014644916, guid: ac87b452392f48bcd854dee5ce0cb519, type: 3}
   itemTag: Environment
-  canBePickedUp: 1
-  isPassable: 0
+  canBePickedUp: 0
+  isPassable: 1
