@@ -12,6 +12,7 @@ public class LobbyUIS : MonoBehaviour
     private Button _settingsButton;
     private Button _howToPlayButton;
     private Button _mainMenuButton;
+    private Button _resetSaveButton;
     
     private VisualElement _settingsPanel;
     private VisualElement _howToPlayPanel;
@@ -49,10 +50,12 @@ public class LobbyUIS : MonoBehaviour
         _settingsButton = root.Q<Button>("SettingsButton");
         _howToPlayButton = root.Q<Button>("HowToPlayButton");
         _mainMenuButton = root.Q<Button>("MainMenuButton");
+        _resetSaveButton = root.Q<Button>("ResetSaveButton");
 
         // Butonlara tıklama olaylarını bağlıyoruz
         if (_resumeButton != null) _resumeButton.clicked += TogglePause;
         if (_mainMenuButton != null) _mainMenuButton.clicked += OnMainMenuButtonClicked;
+        if (_resetSaveButton != null) _resetSaveButton.clicked += OnResetSaveButtonClicked;
         
         if (_howToPlayButton != null) _howToPlayButton.clicked += OnHowToPlayButtonClicked;
         else Debug.LogWarning("⚠️ LOBBY UI: 'HowToPlayButton' isminde bir buton bulunamadı! UI Builder'ı açıp adını tam olarak böyle yaptığından emin ol.");
@@ -120,6 +123,7 @@ public class LobbyUIS : MonoBehaviour
         BindButtonSounds(_closeSettingsButton);
         BindButtonSounds(_howToPlayButton);
         BindButtonSounds(_closeHowToPlayButton);
+        BindButtonSounds(_resetSaveButton);
         BindButtonSounds(_hudRestartButton);
         BindButtonSounds(_hudExitButton);
     }
@@ -153,6 +157,7 @@ public class LobbyUIS : MonoBehaviour
         if (_closeSettingsButton != null) _closeSettingsButton.clicked -= OnCloseSettingsButtonClicked;
         if (_closeHowToPlayButton != null) _closeHowToPlayButton.clicked -= OnCloseHowToPlayButtonClicked;
         if (_mainMenuButton != null) _mainMenuButton.clicked -= OnMainMenuButtonClicked;
+        if (_resetSaveButton != null) _resetSaveButton.clicked -= OnResetSaveButtonClicked;
 
         if (_hudRestartButton != null) _hudRestartButton.clicked -= OnRestartButtonClicked;
         if (_hudExitButton != null) _hudExitButton.clicked -= OnMainMenuButtonClicked;
@@ -346,6 +351,13 @@ public class LobbyUIS : MonoBehaviour
     private void OnRestartButtonClicked()
     {
         StartCoroutine(FadeOutAndReloadScene());
+    }
+
+    private void OnResetSaveButtonClicked()
+    {
+        Debug.Log("Tüm kayıtlar (PlayerPrefs) siliniyor...");
+        PlayerPrefs.DeleteAll();
+        StartCoroutine(FadeOutAndLoadMenu());
     }
 
     private IEnumerator FadeOutAndLoadMenu()

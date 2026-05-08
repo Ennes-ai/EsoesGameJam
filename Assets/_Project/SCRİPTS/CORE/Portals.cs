@@ -9,26 +9,34 @@ public class Portals : MonoBehaviour
     public bool isVictoryPortal = false; // Seviye sonundaki portal mı?
     public int unlockLevelIndex = 0;    // Eğer bu victory portalsa, hangi leveli açıyor? (Örn: 2)
 
+    private bool isLocked = false;
+    private SpriteRenderer sr;
+
     private void Start()
     {
+        sr = GetComponent<SpriteRenderer>();
+
         // Portal bir zafer portalı değilse (yani lobi içerisindeki giriş portallarındansa) kilit durumunu kontrol et
         if (!isVictoryPortal)
         {
             int reachedLevel = PlayerPrefs.GetInt("ReachedLevel", 0);
-            bool isLocked = false;
+            
+            // İsimlerde yanlışlıkla bırakılmış boşluklar varsa (örn: "Level_1 ") onları temizliyoruz
+            string pName = LoadingPortalName != null ? LoadingPortalName.Trim() : "";
 
-            if (LoadingPortalName == "Level_1" && reachedLevel < 1) isLocked = true;
-            else if (LoadingPortalName == "Level_2" && reachedLevel < 2) isLocked = true;
-            else if (LoadingPortalName == "Level_3" && reachedLevel < 3) isLocked = true;
+            if (pName == "Level_1" && reachedLevel < 1) isLocked = true;
+            else if (pName == "Level_2" && reachedLevel < 2) isLocked = true;
+            else if (pName == "Level_3" && reachedLevel < 3) isLocked = true;
+        }
+    }
 
-            SpriteRenderer sr = GetComponent<SpriteRenderer>();
-            if (sr != null)
-            {
-                if (isLocked)
-                    sr.color = new Color(0.3f, 0.3f, 0.3f, 1f); // Kilitliyse karanlık/gri yap
-                else
-                    sr.color = Color.white; // Açıksa orijinal/normal renginde kalsın
-            }
+    private void Update()
+    {
+        // Eğer portalda animasyon (Animator) varsa rengi ezmesini engellemek için rengi zorla uyguluyoruz
+        if (!isVictoryPortal && sr != null)
+        {
+            if (isLocked) sr.color = new Color(0.3f, 0.3f, 0.3f, 1f); // Kilitliyse karanlık yap
+            else sr.color = Color.white; // Açıksa normal kalsın
         }
     }
 }

@@ -25,10 +25,10 @@
 /* --- Pause Paneli Tasarımı (Ana Menüdeki Panellerle Aynı) --- */
 .pause-panel {
     position: absolute;
-    width: 40%;
-    height: 65%;
-    top: 17.5%;
-    left: 30%;
+    width: 45%;
+    height: 80%;
+    top: 10%;
+    left: 27.5%;
     background-color: rgb(15, 15, 18); /* Transparanlığı kaldırıp tam katı renk yaptık */
     border-color: rgb(180, 180, 180);
     border-width: 2px;
@@ -92,6 +92,23 @@
     border-color: rgb(200, 200, 200);
     color: rgb(220, 220, 220);
     transition-duration: 0.05s;
+}
+
+/* --- Kayıt Silme Butonu (Tehlikeli Eylem) --- */
+.reset-button {
+    background-color: rgba(200, 50, 50, 0.4);
+    border-color: rgb(255, 100, 100);
+}
+
+.reset-button:hover {
+    background-color: rgba(220, 60, 60, 0.7);
+    border-color: rgb(255, 255, 255);
+}
+
+.reset-button:active {
+    background-color: rgba(240, 80, 80, 0.9);
+    border-color: rgb(200, 200, 200);
+    color: rgb(220, 220, 220);
 }
 
 /* --- Ayarlar Paneli Tasarımı --- */

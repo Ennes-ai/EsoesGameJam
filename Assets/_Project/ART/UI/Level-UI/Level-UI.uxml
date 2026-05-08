@@ -22,6 +22,7 @@
             <ui:Button text="A Y A R L A R" name="SettingsButton" class="pause-button"/>
             <ui:Button text="N A S I L  O Y N A N I R" name="HowToPlayButton" class="pause-button"/>
             <ui:Button text="A N A  M E N Ü" name="MainMenuButton" class="pause-button"/>
+            <ui:Button text="K A Y I T L A R I  S I L" name="ResetSaveButton" class="pause-button reset-button"/>
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement name="SettingsPanel" class="settings-panel settings-panel--hidden">
