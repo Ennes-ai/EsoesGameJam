@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 831606709b401924998294c5de0b78f6, type: 3}
-  m_Name: RiverType
+  m_Name: PurpleStoneType
   m_EditorClassIdentifier: Assembly-CSharp::ItemType
-  category: 2
-  itemSprite: {fileID: 0}
+  category: 1
+  itemSprite: {fileID: -2758023387302766147, guid: a2628d7aa83e6237785e4790e824230f, type: 3}
   itemTag: Environment
   canBePickedUp: 1
   isPassable: 0
