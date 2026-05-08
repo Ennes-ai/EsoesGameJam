@@ -13,7 +13,6 @@ public class Player : MonoBehaviour
     private PlayerEnvanter playerEnvanter;
     private bool IsInPortal = false;
     private string portalName;
-    private bool _isTransitioning = false; // Portala girerken spamlama olmasın diye kontrol değişkeni
 
     private Animator animator;
     private string currentAnimState = "Idle";
@@ -32,9 +31,9 @@ public class Player : MonoBehaviour
         playerEnvanter = GetComponent<PlayerEnvanter>();
         animator = GetComponent<Animator>();
 
-        if (!PlayerPrefs.HasKey("ReachedLevel"))  // oyun ilk defa aciliyorsa otomatik 0. level acik olsun
+        if (!PlayerPrefs.HasKey("ReachedLevel"))  // oyun ilk defa aciliyorsa otomatik 1. level acik olsun
         {
-            PlayerPrefs.SetInt("ReachedLevel", 0);
+            PlayerPrefs.SetInt("ReachedLevel", 1);
         }
     }
 
@@ -54,9 +53,9 @@ public class Player : MonoBehaviour
             playerEnvanter.UseTheItem();
         }
 
-        if (IsInPortal && Input.GetKeyDown(KeyCode.E) && currentPortalData != null && !_isTransitioning)
+        if (IsInPortal && Input.GetKeyDown(KeyCode.E) && currentPortalData != null)
         {
-            HandlePortalLogic();
+             HandlePortalLogic();
         }
 
         if (Input.GetKeyDown(KeyCode.F))
@@ -103,8 +102,6 @@ public class Player : MonoBehaviour
 
     private void HandlePortalLogic()
     {
-        _isTransitioning = true; // Geçiş başladı, başka tıklamaları engelle
-
         string targetLevel = currentPortalData.LoadingPortalName;
         int reachedLevel = PlayerPrefs.GetInt("ReachedLevel");
 
@@ -138,13 +135,13 @@ public class Player : MonoBehaviour
         }
         else
         {
-            _isTransitioning = false; // Geçiş başarısız olursa tekrar E'ye basabilsin
             Debug.Log("Bu seviye henüz kilitli! Önceki seviyeyi bitirmelisin.");
         }
     }
 
     void FixedUpdate()
     {
+        // Fizik tabanlı hareketi burada uyguluyoruz
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
 
@@ -173,21 +170,38 @@ public class Player : MonoBehaviour
         
         if (lobbyUI != null)
         {
-            // Eğer bulunduğumuz sahne Level_4 ise portal bizi oyun sonu sinematiğine soksun
-            if (SceneManager.GetActiveScene().name == "Level_4")
-            {
-                lobbyUI.PlayEndingSequence();
-            }
-            else
-            {
-                lobbyUI.LoadSceneWithFade(levelName);
-            }
+            lobbyUI.LoadSceneWithFade(levelName);
         }
         else
         {
-            SceneManager.LoadScene(levelName); // UI bulunamazsa güvenli geçiş (Fail-safe)
+            SceneManager.LoadScene(levelName);
         }
     }
 
-    public Vector2 GetLastLookingPoint() => movement;
+    public Vector2 GetLastLookingPoint()
+    {
+        return movement;
+    }
+
+    // --- YENİ: KARE KARE İTTİRME İÇİN ÇARPIŞMA KONTROLÜ ---
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        // Eğer karakter bir yere yürüyorsa (W,A,S,D basıyorsa)
+        if (movement != Vector2.zero)
+        {
+            TransformableBlock block = collision.gameObject.GetComponent<TransformableBlock>();
+            
+            if (block != null)
+            {
+                // Karakterin gidiş yönü, taşa doğru mu bakıyoruz?
+                Vector2 dirToBlock = (collision.transform.position - transform.position).normalized;
+                
+                // Karakter gerçekten taşa doğru güç uyguluyorsa ittirmeyi tetikle
+                if (Vector2.Dot(movement, dirToBlock) > 0.5f)
+                {
+                    block.TryPush(movement);
+                }
+            }
+        }
+    }
 }
