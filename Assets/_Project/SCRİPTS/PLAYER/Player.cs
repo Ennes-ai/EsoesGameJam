@@ -114,6 +114,16 @@ public class Player : MonoBehaviour
                 PlayerPrefs.SetInt("ReachedLevel", currentPortalData.unlockLevelIndex);
                 Debug.Log("YENİ LEVEL AÇILDI: Level " + currentPortalData.unlockLevelIndex);
             }
+            // LEVEL 3 (Son Seviye) BİTİRİLDİYSE FİNAL SİNEMATİĞİNİ OYNAT
+            if (SceneManager.GetActiveScene().name == "Level_3")
+            {
+                LobbyUIS lobbyUI = FindAnyObjectByType<LobbyUIS>();
+                if (lobbyUI != null)
+                {
+                    lobbyUI.PlayEndingSequence();
+                    return; // Klasik lobiye geçişi iptal et, sinematiği bekle
+                }
+            }
             LoadTheLevel(targetLevel); // Genelde "Lobby" olur
             return;
         }
@@ -126,7 +136,6 @@ public class Player : MonoBehaviour
         else if (targetLevel == "Level_1" && reachedLevel >= 1) canEnter = true; // Level 1
         else if (targetLevel == "Level_2" && reachedLevel >= 2) canEnter = true;
         else if (targetLevel == "Level_3" && reachedLevel >= 3) canEnter = true;
-        else if (targetLevel == "Level_4" && reachedLevel >= 4) canEnter = true;
         else if (targetLevel == "Lobby") canEnter = true;
 
         if (canEnter)
