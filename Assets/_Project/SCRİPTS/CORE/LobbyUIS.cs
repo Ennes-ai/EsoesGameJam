@@ -401,6 +401,12 @@ public class LobbyUIS : MonoBehaviour
     {
         Time.timeScale = 1f;
 
+        // Sinematik başladığında kapanış müziğine geçiş yap
+        if (AudioManager.instance != null && AudioManager.instance.endingMusic != null)
+        {
+            AudioManager.instance.PlayMusic(AudioManager.instance.endingMusic);
+        }
+
         // 1. Ekran yavaşça kararır
         if (_fadeOverlay != null) _fadeOverlay.AddToClassList("fade-overlay--active");
         yield return new WaitForSecondsRealtime(1.5f);

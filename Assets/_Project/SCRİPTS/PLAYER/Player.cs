@@ -7,6 +7,12 @@ public class Player : MonoBehaviour
 {
     [Header("Hareket Ayarları")]
     [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float pushSpeedMultiplier = 0.4f; // Taşı iterken hız ne kadar düşecek? (0.4 = %40 hız)
+    private bool isPushing = false; // Karakter şu an bir şey itiyor mu?
+    
+    [Header("Ses Ayarları")]
+    [SerializeField] private float stepInterval = 0.35f; // Adım atma sıklığı (saniye)
+    private float stepTimer = 0f;
 
     private Rigidbody2D rb;
     private Vector2 movement;
@@ -31,9 +37,9 @@ public class Player : MonoBehaviour
         playerEnvanter = GetComponent<PlayerEnvanter>();
         animator = GetComponent<Animator>();
 
-        if (!PlayerPrefs.HasKey("ReachedLevel"))  // oyun ilk defa aciliyorsa otomatik 1. level acik olsun
+        if (!PlayerPrefs.HasKey("ReachedLevel"))  // oyun ilk defa aciliyorsa sadece Level_0 acik olsun
         {
-            PlayerPrefs.SetInt("ReachedLevel", 1);
+            PlayerPrefs.SetInt("ReachedLevel", 0);
         }
     }
 
@@ -45,6 +51,29 @@ public class Player : MonoBehaviour
 
         // Çapraz giderken hızlanmayı önlemek için vektörü normalize ediyoruz
         movement = movement.normalized;
+
+        // --- YÜRÜME SESİ (FOOTSTEPS) KONTROLÜ ---
+        if (movement != Vector2.zero)
+        {
+            if (stepTimer <= 0f)
+            {
+                if (AudioManager.instance != null && AudioManager.instance.stepsSound != null)
+                {
+                    AudioManager.instance.PlayStepSound();
+                }
+                stepTimer = stepInterval; // Süreyi başa sar
+            }
+        }
+        else
+        {
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.StopStepSound();
+            }
+        }
+
+        // Süreyi her durumda azalt ki tuşlara hızlı basıldığında (spam) sesler üst üste binmesin
+        if (stepTimer > 0f) stepTimer -= Time.deltaTime;
 
         UpdateAnimations();
 
@@ -124,6 +153,7 @@ public class Player : MonoBehaviour
                     return; // Klasik lobiye geçişi iptal et, sinematiği bekle
                 }
             }
+            if (AudioManager.instance != null && AudioManager.instance.teleportSound != null) AudioManager.instance.PlaySFX(AudioManager.instance.teleportSound);
             LoadTheLevel(targetLevel); // Genelde "Lobby" olur
             return;
         }
@@ -140,6 +170,7 @@ public class Player : MonoBehaviour
 
         if (canEnter)
         {
+            if (AudioManager.instance != null && AudioManager.instance.teleportSound != null) AudioManager.instance.PlaySFX(AudioManager.instance.teleportSound);
             LoadTheLevel(targetLevel);
         }
         else
@@ -150,8 +181,14 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        // Eğer taş itiyorsa hızı düşür, itmiyorsa normal hızında ilerle
+        float currentSpeed = isPushing ? moveSpeed * pushSpeedMultiplier : moveSpeed;
+
         // Fizik tabanlı hareketi burada uyguluyoruz
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + movement * currentSpeed * Time.fixedDeltaTime);
+        
+        // Bir sonraki kare için itme durumunu sıfırla (Eğer hala itiyorsa OnCollisionStay2D bunu tekrar true yapacak)
+        isPushing = false; 
     }
 
     private void OnTriggerEnter2D(Collider2D other) 
@@ -208,6 +245,12 @@ public class Player : MonoBehaviour
                 // Karakter gerçekten taşa doğru güç uyguluyorsa ittirmeyi tetikle
                 if (Vector2.Dot(movement, dirToBlock) > 0.5f)
                 {
+                    // Sadece "Stone" (Taş) itiliyorsa karakteri yavaşlat
+                    if (block.currentItemType != null && block.currentItemType.category == ItemCategory.Stone)
+                    {
+                        isPushing = true;
+                    }
+                    
                     block.TryPush(movement);
                 }
             }

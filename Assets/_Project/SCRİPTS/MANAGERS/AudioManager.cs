@@ -17,6 +17,7 @@ public class AudioManager : MonoBehaviour
     [Header("muzik loop ve ambiyans")]
     public AudioClip mainMenuMusic;
     public AudioClip ambians;
+    public AudioClip endingMusic;
 
     [Header("Ses Efektleri (SFX)")]
     public AudioClip homurdanmaSesi;
@@ -27,6 +28,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip stepsSound;
     public AudioClip teleportSound;
     public AudioClip tiklamaSesi;
+
+    private AudioSource dedicatedStepSource;
 
 private void Awake()
     {
@@ -59,6 +62,11 @@ private void Awake()
 
         // Oyun direkt Editör'den herhangi bir levelde başlatıldığında da doğru müziği çalsın
         CheckAndPlayMusic(SceneManager.GetActiveScene().name);
+        
+        // Ayak seslerinin diğer sesleri (SFX) bozmaması ve üst üste binmemesi için kodla özel bir kaynak yaratıyoruz
+        dedicatedStepSource = gameObject.AddComponent<AudioSource>();
+        if (sfxSource != null) dedicatedStepSource.outputAudioMixerGroup = sfxSource.outputAudioMixerGroup;
+        dedicatedStepSource.playOnAwake = false;
     }
 
     private void LoadVolumeSettings()
@@ -143,9 +151,19 @@ private void Awake()
 
     public void PlayStepSound()
     {
-        sfxSource.pitch = Random.Range(0.9f, 1.1f);
-        sfxSource.PlayOneShot(stepsSound);
-        Invoke(nameof(ResetPitch), 0.1f);
+        if (stepsSound == null || dedicatedStepSource == null) return;
+        
+        dedicatedStepSource.pitch = Random.Range(0.9f, 1.1f);
+        dedicatedStepSource.clip = stepsSound;
+        dedicatedStepSource.Play(); // PlayOneShot yerine Play kullanıyoruz, böylece yeni adım atıldığında eski adımın kuyruğu kesilir.
+    }
+
+    public void StopStepSound()
+    {
+        if (dedicatedStepSource != null && dedicatedStepSource.isPlaying)
+        {
+            dedicatedStepSource.Stop();
+        }
     }
 
     private void ResetPitch()

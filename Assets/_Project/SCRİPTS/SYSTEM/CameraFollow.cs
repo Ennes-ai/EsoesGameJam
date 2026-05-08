@@ -35,8 +35,14 @@ public class CameraFollow : MonoBehaviour
         // Eğer sınırlar aktifse, hedeflenen pozisyonu sınırlar içinde tut (Clamp)
         if (useBounds)
         {
-            desiredPosition.x = Mathf.Clamp(desiredPosition.x, minBounds.x, maxBounds.x);
-            desiredPosition.y = Mathf.Clamp(desiredPosition.y, minBounds.y, maxBounds.y);
+            // Inspector'da Min ve Max değerleri ters girilse bile sorun çıkmasını engelliyoruz
+            float trueMinX = Mathf.Min(minBounds.x, maxBounds.x);
+            float trueMaxX = Mathf.Max(minBounds.x, maxBounds.x);
+            float trueMinY = Mathf.Min(minBounds.y, maxBounds.y);
+            float trueMaxY = Mathf.Max(minBounds.y, maxBounds.y);
+
+            desiredPosition.x = Mathf.Clamp(desiredPosition.x, trueMinX, trueMaxX);
+            desiredPosition.y = Mathf.Clamp(desiredPosition.y, trueMinY, trueMaxY);
         }
 
         // Kamerayı şu anki konumundan hedeflenen konuma pürüzsüzce hareket ettir
@@ -49,8 +55,14 @@ public class CameraFollow : MonoBehaviour
         if (useBounds)
         {
             Gizmos.color = Color.green;
-            Vector3 center = new Vector3((minBounds.x + maxBounds.x) / 2, (minBounds.y + maxBounds.y) / 2, 0);
-            Vector3 size = new Vector3(maxBounds.x - minBounds.x, maxBounds.y - minBounds.y, 0);
+            
+            float trueMinX = Mathf.Min(minBounds.x, maxBounds.x);
+            float trueMaxX = Mathf.Max(minBounds.x, maxBounds.x);
+            float trueMinY = Mathf.Min(minBounds.y, maxBounds.y);
+            float trueMaxY = Mathf.Max(minBounds.y, maxBounds.y);
+
+            Vector3 center = new Vector3((trueMinX + trueMaxX) / 2, (trueMinY + trueMaxY) / 2, 0);
+            Vector3 size = new Vector3(trueMaxX - trueMinX, trueMaxY - trueMinY, 0);
             Gizmos.DrawWireCube(center, size);
         }
     }

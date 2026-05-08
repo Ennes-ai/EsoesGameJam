@@ -351,10 +351,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraFollow
   target: {fileID: 1850387282}
   offset: {x: 0, y: 0, z: -10}
-  smoothTime: 0.125
-  useBounds: 0
-  minBounds: {x: 0, y: 0}
-  maxBounds: {x: 0, y: 0}
+  smoothTime: 0.21
+  useBounds: 1
+  minBounds: {x: -23.78, y: 20.34}
+  maxBounds: {x: 34.4, y: -16.65}
 --- !u!114 &8859659
 MonoBehaviour:
   m_ObjectHideFlags: 0

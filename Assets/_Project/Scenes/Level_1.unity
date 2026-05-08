@@ -6559,9 +6559,9 @@ MonoBehaviour:
   target: {fileID: 2035489585}
   offset: {x: 0, y: 0, z: -10}
   smoothTime: 0.201
-  useBounds: 0
-  minBounds: {x: 0, y: 0}
-  maxBounds: {x: 0, y: 0}
+  useBounds: 1
+  minBounds: {x: -28.45, y: 28.5}
+  maxBounds: {x: 49.83, y: -21.61}
 --- !u!4 &527746090 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4090202378239124899, guid: 8426db20d501ec552b60e91ef01c0849, type: 3}

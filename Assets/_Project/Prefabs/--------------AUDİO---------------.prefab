@@ -245,6 +245,7 @@ MonoBehaviour:
   sfxSource: {fileID: 3434090636770293663}
   mainMenuMusic: {fileID: 8300000, guid: 1b46b05a54637dca2916ad1c348f5948, type: 3}
   ambians: {fileID: 8300000, guid: e3e4e0905e6f7a49ab638472c236949b, type: 3}
+  endingMusic: {fileID: 8300000, guid: efc3659e9d526734fb543609a88521df, type: 3}
   homurdanmaSesi: {fileID: 8300000, guid: 585bd42c7f366f965977f6f07152dcdf, type: 3}
   hover: {fileID: 8300000, guid: 6b643825ace70b88691651cfed604686, type: 3}
   itemPickUp: {fileID: 8300000, guid: 29b4a90256727db2898eb9c73a341843, type: 3}
