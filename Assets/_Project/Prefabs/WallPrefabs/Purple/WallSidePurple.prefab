@@ -199,7 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c299a386a58c742a29884d0a780630, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CollectibleItem
-  itemType: {fileID: 11400000, guid: c0d6bc83dcf14eeecb4c439b416f9ba4, type: 2}
+  itemType: {fileID: 11400000, guid: d5815133f05a0191ab86fa08f9f94a20, type: 2}
   IsCollectible: 0
 --- !u!114 &6474888315290838304
 MonoBehaviour:

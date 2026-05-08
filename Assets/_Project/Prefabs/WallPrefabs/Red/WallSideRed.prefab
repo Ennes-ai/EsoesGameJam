@@ -200,7 +200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CollectibleItem
   itemType: {fileID: 11400000, guid: c0d6bc83dcf14eeecb4c439b416f9ba4, type: 2}
-  IsCollectible: 1
+  IsCollectible: 0
 --- !u!114 &8377077073044402902
 MonoBehaviour:
   m_ObjectHideFlags: 0
