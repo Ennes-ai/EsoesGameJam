@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7990981610578923751}
   - component: {fileID: 5875340956576119774}
   - component: {fileID: 6411020317148335506}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TasMor
   m_TagString: Stone
   m_Icon: {fileID: 0}

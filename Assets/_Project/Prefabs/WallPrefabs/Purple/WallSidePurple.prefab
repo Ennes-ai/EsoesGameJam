@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2877813336787563952}
   - component: {fileID: 2309147310062509948}
   - component: {fileID: 6474888315290838304}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WallSidePurple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
