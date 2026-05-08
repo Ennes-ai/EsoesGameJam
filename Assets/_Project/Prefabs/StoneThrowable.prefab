@@ -74,6 +74,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b2e844080336b0f6b01ef2ac42988f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ThrownItem
+  itemType: {fileID: 0}
+  speed: 10
+  decelRate: 3
+  stopThreshold: 0.1
 --- !u!58 &3128253994005145533
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -157,7 +161,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_MaskInteraction: 0
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

@@ -6556,7 +6556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be11cd89552cb3743848dc180639a9be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraFollow
-  target: {fileID: 1932741283}
+  target: {fileID: 0}
   offset: {x: 0, y: 0, z: -10}
   smoothTime: 0.201
   useBounds: 0
@@ -12575,8 +12575,9 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &1018256261
 Transform:
-  m_CorrespondingSourceObject: {fileID: 3836634690088096460, guid: 36d4cd70de3aa8141ac43911a1e499c1, type: 3}
-  m_PrefabInstance: {fileID: 6553678734199770817}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1018256260}
   serializedVersion: 2
